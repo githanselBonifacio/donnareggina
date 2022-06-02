@@ -1,7 +1,7 @@
 package co.com.donnareggina.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
+
 
 public class ProductViewData implements Serializable{
 	
