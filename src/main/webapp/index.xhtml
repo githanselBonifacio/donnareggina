@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      
+	
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/card-mine.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="css/mainIndex.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="css/botton.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="css/menu.css" media="screen" />
+		<script type="text/javascript" src="js/loadContent.js"/>
+		<title>Donnareggina</title>
+		
+	</h:head>
+
+	<h:body>
+		
+		<div class="container">
+	
+        	<div class="header">
+            
+            	<div>
+                	<h1>DONNAREGGINA</h1>
+            	</div>
+            	
+            	<div class = "container-menu">
+  					
+  					<h:form>
+       
+       		 			<p:toolbar styleClass="menu-bar" style="background: white;border:0px;">
+         					<p:growl id="messages" showDetail="true" />
+         					
+            				<p:toolbarGroup >
+             
+       							<span class="ui-input-icon-left" >
+        						 	<i class="pi pi-search"/>
+        							<p:inputText placeholder="Buscar..." icon="pi pi-fw pi-search" style="font-size:1.2em;"/>
+    							</span>
+        			
+            				</p:toolbarGroup>
+            				
+							<p:toolbarGroup>
+		
+								
+								 <p:linkButton  value="Inicio"         outcome="index.xhtml"               style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>           
+    							 <p:linkButton  value="Tienda"         outcome="templates/tienda.xhtml"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+   								 <p:linkButton  value="Acerca de"      outcome="templates/acercaDe.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+    							 <p:linkButton  value="Contacto"       outcome="templates/contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+                               	 <p:linkButton  value="Administración" outcome="templates/admin.xhtml"    rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>	
+							
+								
+							</p:toolbarGroup>
+			
+            				<p:toolbarGroup align="right" >
+            				
+            					<p:linkButton  outcome="login" value="Iniciar sesión" icon="pi pi-user" rendered="#{!loginController.user.isSession}" style="font-size:0.8em;background-color:white;color: black;border: 0;"/>
+            					<p:commandButton  value="#{loginController.user.dataUser.toString()}" type="button" icon="pi pi-user" rendered="#{loginController.user.isSession}" onclick="PF('log-out').show()" 
+            					                     style="background: none;color: black;border: 0;text-decoration: none;"/>
+            					<p:autoUpdate/>
+            					<p:tag value="#{loginController.user.rol}" rendered="#{loginController.user.rol == 'ADMIN'}"/>
+            					<p:badge value="#{loginController.quantityInCart}" rendered="#{loginController.user.rol == 'CUSTOMER'}" style="background-color:#164081">
+            						<p:commandButton type="button" icon="pi pi-shopping-cart"  onclick="PF('cart-shop').show()" rendered="#{loginController.user.rol == 'CUSTOMER'}"
+            						                  style="background: none;color: black;border: 0;text-decoration: none;"/>
+            					</p:badge>
+            					
+            				</p:toolbarGroup>
+            				
+        			</p:toolbar>
+        			<p:divider/>
+        			<p:sidebar widgetVar="cart-shop" position="right" style="padding:0px; " showCloseIcon="false">
+        				
+			        				<div style="background-color:#164081;display: flex">
+			        					<p:commandButton onclick="PF('cart-shop').hide()" icon="pi pi-chevron-right" style="background-color:#164081;border-width:0px" />
+			        					<p style="font-size: 1.7em;color: white; ">Carrito de compras</p>
+			        				
+			        				</div>
+							        <p:dataTable var="productCart" value="#{cartResume.productsCart}" scrollable="true" scrollHeight="55%">
+							        	<p:column>
+								        	 <div class="product-list-item" style="display: flex; justify-content: space-between;padding-left: 1em;padding-right: 1em;">
+								        	 			<div>
+								        	 			 	<p:graphicImage value="#{productCart.image}" stream="false" style="width:6em;"/>
+								        	 			</div>
+								                   
+								                    	<div>
+								                    			<div class="product-list-detail">
+										                        	<div class="product-name" style="font-size: 1.2em;">#{productCart.nombre}</div>
+										          
+										                   	   </div>
+										                       <div class="product-list-action">
+										                            <h:outputText value="#{productCart.price}" style="font-size: 1.2em;" styleClass="product-price">
+										                            	<f:convertNumber currencySymbol="$" type="currency"/>
+										                            </h:outputText>
+						
+						                    					</div>
+						                    					<div class="product-list-detail">
+										                        	<div class="product-name" style="font-size: 1.2em;">Cantidad: #{productCart.quantity}</div>
+										          
+										                   	   </div>
+				                              			</div>
+								                    		
+								             </div>
+										                   
+							            </p:column>
+							   
+							        </p:dataTable>
+							        <p:divider/>
+							        <div style="position: relative;padding-left: 2em;">
+								        	<p style="font-size: 1.5em;margin-bottom: 0px;">Subtotal</p>
+								            <h:outputText value="#{cartResume.totalPrice}" style="font-size: 1.2em;" styleClass="product-price">
+										          <f:convertNumber currencySymbol="$" type="currency"/>
+										    </h:outputText>
+				
+							        </div>
+							        <div style="position:absolute;bottom: 2em;left:5.5em; ">
+							        	<div style="text-align: center;">
+							        		<p:commandButton value="Ver Carrito" style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
+							        	</div>
+							        	
+							        
+							        </div>
+							    </p:sidebar>
+				    
+				    
+	        		<p:sidebar widgetVar="log-out" position="right" style="padding:0px;" showCloseIcon="false">
+					      
+					      <div style="background-color:#164081;display: flex;">
+			        					<p:commandButton onclick="PF('log-out').hide()" icon="pi pi-chevron-right" style="background-color:#164081;border-width:0px" />
+			        					<p style="font-size: 1.7em;color: white; ">Tu cuenta</p>
+			        				
+			        	</div>
+					      <div class="container-account">
+					         
+					         <div style="text-align: center;display: block;margin-top: 2em;">
+						      	 <img src="img/user-account.png" alt="user-account" style="height: 8em;"/>
+						         <br/>
+						          <h2>#{loginController.user.dataUser.toString()}</h2>
+					         </div>
+					         
+					          <div style="display: block;">
+					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+					      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
+
+					         </div>
+					      </div>
+					      
+					     
+					</p:sidebar>
+       
+    			</h:form>
+  					    
+            </div>
+            	
+        </div>
+		
+        <div class="body-dinamic">
+			
+			<div class="news-baner">
+			    <p:galleria value="#{imageView.images}" var="image" numVisible="3" circular="true" autoPlay="true" transitionInterval="4000"
+			    responsiveOptions="#{imageView.responsiveOptions}" style="max-width: 3500px;">
+			        <p:graphicImage value="#{image}"  style="width: 100%; display: block"  stream="false" autoPlay="true" transitionInterval="3000"/>
+			        
+			    </p:galleria>
+			</div>
+			<p:divider/>	
+			<h1 class="titlesMain">Novedades</h1>
+			
+			<h:form id="form">
+				 
+				 
+				 <div class="card">
+				 
+				 	<p:carousel value="#{carouselView.products}" var="product" circular="true" autoplayInterval="4000"
+                    			responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
+            			
+			            			<div class="product-item">
+			                			<div class="product-item-content">
+			                			
+			                    			<div class="p-mb-3" >
+			                    			
+			                        			<p:graphicImage value="#{product.image}" stream="false" styleClass="product-image" id="images"/>
+			                    			</div>
+			                    			<div class="text-card-head">
+			                       				<h4 class="p-mb-1"  >#{product.nombre}</h4>
+			                        			<h6 class="p-mt-0 p-mb-3" >
+			                        			
+			                           			<h:outputText  value="#{product.price}">
+			                                			<f:convertNumber type="currency" pattern="¤###,###.###" currencySymbol="$" />
+			                            		</h:outputText>
+			                        			</h6>
+			                        				<div>
+				                        				<div class="status-stock">
+						                        			
+						                        				<span class="product-badge-status-#{product.inventoryStatus.replaceAll(' ','-')}">#{product.inventoryStatus}</span>
+						                        			
+						                        		</div>
+			                        				
+			                        				</div>
+					             
+			                        			<div class="bottom-cart">
+			                            	
+			                            			<p:commandButton style="margin: 2%" value="Agregar al carrito" 
+			                            			    action="#{manageCart.redirect(loginController.user.rol)}"
+			                            			         icon="pi pi-fw pi-shopping-cart" ajax="false">
+			                            			         
+			                            				<f:setPropertyActionListener value="#{product}" target="#{manageCart.selectedProduct}"/>
+									                    
+			                            			       
+			                            			</p:commandButton>
+			 
+			                        			</div>
+			                    			</div>
+			                			</div>
+			            			</div>
+            			
+        			</p:carousel>
+				 
+				    </div>
+				 	
+        				<p:dialog header="Cuenta administrativa" widgetVar="manageCartAdmin" minHeight="40" width="350" showEffect="fade">
+					    	<p class="p-m-0"> Su cuenta es de tipo administrativa no hay carrito de compras asociado</p>
+					   
+						</p:dialog>
+					
+				    	<p:dialog header="Agregar al carrito" modal="true" widgetVar="manageCartCustomer"  width="75%" showEffect="fade">
+						    
+						    <p:outputPanel id="detai-product-add-cart">
+						    
+						    		<div class="card" >
+						    			 <div class="p-grid" style="display: flex;">
+						    			 		
+						    			 		<div class="p-col-5 p-d-flex p-ai-center p-jc-center">
+						    			 				
+						    			 				<div class="ui-fluid">
+						    			 					 
+						    			 					 <div class="p-mb-3">
+											                      <p:galleria value="#{manageCart.imageOption}" var="image" numVisible="#{manageCart.imageOption.size()}" responsiveOptions="#{manageCart.responsiveOptionsImage}"
+															                showThumbnails="false" showIndicators="#{manageCart.imageOption.size()>1}" changeItemOnIndicatorHover="true" showIndicatorsOnItem="false"  style="max-width: 640px">
+															        <p:graphicImage value="#{image}"  style="width: 62%; display: block;" stream="false" />
+															    </p:galleria>
+											                 </div>
+													    			 					 
+						    			 			    </div>
+						    			 		
+						    			 		</div>
+						    			 			
+								    			 <div class="p-col-2">
+										            <p:divider layout="vertical">
+										                <b></b>
+										            </p:divider>
+										        </div>
+										        	
+										         <div>
+										         
+											        <div class="p-field">
+								      					
+								                        <h2 id="nombre" style="margin:0; font-size: 2em;text-align: left;"  >#{manageCart.selectedProduct.nombre}</h2>
+								             		</div>
+						                   
+											        <div class="text-size-view" id="text-size#{crudView.selectedProduct.size}">
+														  
+														 	 <p:tag styleClass="p-mr-2" icon="pi pi-tag" value="#{manageCart.selectedProduct.category}" style="font-size:1em;background-color: white;color:black"/>
+															
+													</div>
+													
+												    <div class="p-field p-col-12 p-md-4">
+												    
+												    	<div class="item-card-cart" >
+												    	
+												         <p:panel  style="margin-bottom:10px;">
+													            <h:panelGrid columns="2" cellpadding="5">
+													             
+													                <p:selectOneMenu id="color" value="#{manageCart.selectedColor}" style="width:150px">
+													                    <p:ajax listener="#{basicView.onCountryChange}" update="size"/>
+													                    <f:selectItem itemLabel="Color" itemValue="" noSelectionOption="true"/>
+													                    <f:selectItems value="#{manageCart.colors}"/>
+													                </p:selectOneMenu>
+													
+													               
+													                <p:selectOneMenu id="size" value="#{manageCart.selectedSize}" style="width:150px">
+													                    <f:selectItem itemLabel="Talla" itemValue="" noSelectionOption="true"/>
+													                    <f:selectItems value="#{manageCart.selectedSize}"/>
+													                </p:selectOneMenu>
+													                
+													            </h:panelGrid>
+										          			</p:panel>
+                
+												    		
+												    	</div>
+												    	
+												    	
+												    </div>
+										             
+										            <div class="p-field p-col-12 p-md-4">
+										            
+										            	<p:rating value="#{manageCart.selectedProduct.rating}" readonly="true" style="padding-bottom: 0.8em;"/>
+										            
+										            
+										            </div>
+										            
+										             <div class="p-field" style="padding-bottom: 0.8em;">
+										             	<p:outputLabel for="price" style="display:block;">Precio</p:outputLabel>
+								      					<p:inputNumber id="price" value="#{manageCart.selectedProduct.price}"
+										                                           symbol="$" symbolPosition="s" 
+										                                           decimalSeparator="." thousandSeparator="," disabled="true" />
+								             		</div>
+								             		
+								             		<div class="p-field p-col">
+									                    <p:outputLabel for="quantity" style="padding-right:0.5em;">Cantidad</p:outputLabel>
+									                    <p:spinner id="quantity" min="1" value="#{manageCart.selectedProductQuantity}"/>
+									                </div> 
+													
+													 <div class="p-col-5 p-d-flex p-ai-center p-jc-center">
+											            <p:commandButton type="submit" value="Agregar" icon="pi pi-shopping-cart" class="ui-button-success" style="margin-top: 1em;" 
+											                action="#{manageCart.addCart}"  />
+											        </div>
+										         
+										         </div>	
+										        
+						    			 
+						    			 </div>
+						    			
+						    		
+						    		</div>
+						    	
+			                   
+						    </p:outputPanel>
+						    
+						   
+					</p:dialog>
+					
+					<p:dialog header="Iniciar sesión" modal="true" widgetVar="goInitSesion" minHeight="40" width="350" showEffect="fade">
+						    <p class="p-m-0"> Para agregar al carrito debe iniciar sesion. Desea iniciar sesión? </p>
+							<p:commandButton value="Si" action="/templates/login.xhtml" ajax="false" styleClass="ui-confirmdialog-yes"/>
+							
+							<div style="display:flex;text-align: left;">
+						    	<p:commandButton value="No" oncomplete="PF('goInitSesion').hide" styleClass="ui-confirmdialog-no ui-button-flat" ajax="false" />
+							</div>						   
+						   
+					</p:dialog>
+			      
+    			
+					<div class="bottom-shopp-container">
+						<div class="bottom-shopp">
+							
+							<p:commandButton  type="submit" action="templates/tienda.xhtml"  onclick="mostrar()" value="Ver todo"/>
+							
+						</div>
+
+					</div>
+
+   			</h:form>
+		  <p:divider/>		
+        </div>
+		
+    	<div class="foot">
+    	
+    		<div style="display: flex; justify-content: space-around;font-family: 'Josefin Sans';">
+    		
+    			<div style="text-align: center">
+    					<div>
+         					<h2>¿QUÉ HACEMOS</h2>
+         					<p >Fabricamos con la mejor calidad de telas</p>
+         					<p >Diseño a tu medida</p>
+         					<p >Tenemos en cuenta tu opinión</p>
+         					<p >Si tienes diseños, !cuentanos de él!</p>
+						</div>
+    			</div>
+    			
+    			<div style="text-align: center">
+    				    <div class="icon-foot" style="display: block;">
+         					<h2>SIGUENOS EN REDES</h2>
+         					<div>
+	         					<p:avatar   icon="pi pi-fw pi-facebook" size="large" style="margin-right:1em;" />
+		         			
+		         				<p:avatar   icon="pi pi-fw pi-instagram" size="large"/> 
+         					</div>
+	         				
+         				
+         			   </div>	
+    			
+    			</div>
+    			
+    			<div style="text-align: center">
+    				   <div>
+         					<h2>¿NOS CUENTAS TUS DISEÑOS?</h2>
+         					<p >Donnaregina: confección y diseño de modas</p>
+         					<p>Barranquilla - Atlántico</p>
+         					<p >Tel: 300 xxx xx xx</p>
+         					<p >Mail. comercial@donnaregina.com.co</p>
+					  </div>
+    			
+    			</div>
+    		
+    		</div>
+  			
+  						
+  			
+			</div>
+         
+   		</div>
+	  
+	</h:body>
+	
+	
+	
+</html>

@@ -1,0 +1,42 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
+
+.menu-bar {
+	background: white;
+	border:0px;
+	margin-left: 5%;
+	margin-right: 5%;
+	border:none;
+}
+
+.menu-bar input,.init-session{
+	background: none;
+	border:0px;
+	margin-left: 5%;
+	margin-right: 5%;
+	border:none;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 2em;
+}
+
+.container-menu a{
+	background: white;
+	color: black;
+	border: 0px;
+	font-size: 1.5em;
+	text-decoration: none;
+}
+.menu-bar button:hover, .menu-bar a:hover{
+	background: none;
+	color: black;
+	border: 0;
+	color: #4D77FF;
+	font-style: bold;
+}
+.menu-bar button:active {
+	border-color:none;
+  background-color :56BBF1;
+  box-shadow: 0 0.1em #666;
+  transform: translateY(0.1em);
+	
+}

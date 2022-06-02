@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		
+	</h:head>
+	
+	<h:body>
+		<div>
+			<div class="card">
+    <h:form>
+        
+
+        <p:panel header="Select a Location" style="margin-bottom:10px;">
+           
+
+            <p:commandButton style="margin: 2%" value="Agregar al carrito" 
+			                            			    action="#{basicView.displayLocation()}" 
+			                            			         icon="pi pi-fw pi-shopping-cart">
+	                            			       
+			                            			</p:commandButton>
+        </p:panel>
+        
+        <p:dialog header="Cuenta administrativa" widgetVar="dialogPrueba" minHeight="40" width="350" showEffect="fade" modal="true">
+        	
+	        <p:panel header="Select a Location" style="margin-bottom:10px;">
+	            <h:panelGrid columns="2" cellpadding="5">
+	                <p:outputLabel for="country" value="Country: "/>
+	                <p:selectOneMenu id="country" value="#{basicView.country}" style="width:150px">
+	                    <p:ajax listener="#{basicView.onCountryChange}" update="city"/>
+	                    <f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true"/>
+	                    <f:selectItems value="#{basicView.countries}"/>
+	                </p:selectOneMenu>
+	
+	                <p:outputLabel for="city" value="City: "/>
+	                <p:selectOneMenu id="city" value="#{basicView.city}" style="width:150px">
+	                    <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
+	                    <f:selectItems value="#{basicView.cities}"/>
+	                </p:selectOneMenu>
+	            </h:panelGrid>
+          </p:panel>
+        </p:dialog>
+        
+        
+    </h:form>
+</div>
+		
+		</div>
+			
+	
+	</h:body>
+
+      
+</html>

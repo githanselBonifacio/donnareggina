@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd
+	      http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+	      version="3.1">
+		
+		
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/templates/login.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>/templates/adminProducts.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>adminProductBack</from-outcome>
+			<to-view-id>/templates/admin.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/templates/adminUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>adminUserBack</from-outcome>
+			<to-view-id>/templates/admin.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/templates/adminSales.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>adminSalesBack</from-outcome>
+			<to-view-id>/templates/admin.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/templates/admin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>admin-Index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	<navigation-rule>
+	
+		<from-view-id>/templates/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+ 	
+ 	<navigation-rule>
+	
+		<from-view-id>/templates/register.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registerData</from-outcome>
+			<to-view-id>/templates/registerData.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	<navigation-rule>
+	
+		<from-view-id>/templates/registerData.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>register-login</from-outcome>
+			<to-view-id>/templates/login.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/templates/contacto.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>contacto-index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/templates/acercaDe.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>acercaDe-index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/templates/tienda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>tienda-index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+</faces-config>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="../css/menu.css" media="screen" />
+        <title>Administración</title>
+
+	</h:head>
+	
+	<h:body>
+			<div class="header">
+            
+            	<div>
+                	<h1>DONNAREGGINA</h1>
+            	</div>
+            	
+            	<div class = "container-menu">
+  					
+  					<h:form>
+       
+       		 			<p:toolbar styleClass="menu-bar" style="background: white;border:0px;">
+         					<p:growl id="messages" showDetail="true" />
+         					
+            				<p:toolbarGroup>
+             
+       							<span class="ui-input-icon-left" >
+        						 	<i class="pi pi-search"/>
+        							<p:inputText placeholder="Buscar..." icon="pi pi-fw pi-search" style="font-size:1.2em;"/>
+    							</span>
+        			
+            				</p:toolbarGroup>
+            				
+							<p:toolbarGroup>
+		
+								 <p:growl id="growl" life="2000"/>
+								 
+								 <p:linkButton  type="submit"  value="Inicio"         outcome="admin-Index"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
+    							 <p:linkButton  type="submit"  value="Tienda"         outcome="tienda.xhtml"   style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+   								 <p:linkButton  type="submit"  value="Acerca de"      outcome="acercaDe.xhtml" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />
+    							 <p:linkButton  type="submit"  value="Contacto"       outcome="contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+                               	 <p:linkButton  type="submit"  value="Administración" outcome="admin.xhtml" rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>	
+							
+								
+							</p:toolbarGroup>
+			
+            				<p:toolbarGroup align="right">
+            				
+            					<p:linkButton  outcome="login" value="Iniciar sesión" icon="pi pi-user" rendered="#{!loginController.user.isSession}" style="font-size:0.8em;background: none;color: black;border: 0;"/>
+            					<p:commandButton  value="#{loginController.user.dataUser.toString()}" type="button" icon="pi pi-user" rendered="#{loginController.user.isSession}" onclick="PF('log-out').show()" 
+            					                    style="background: none;color: black;border: 0;text-decoration: none;"/>
+            					<p:autoUpdate/>
+            					<p:tag value="#{loginController.user.rol}" rendered="#{loginController.user.rol == 'ADMIN'}"/>
+            					<p:badge value="2" rendered="#{loginController.user.rol == 'CUSTOMER'}">
+            						<p:commandButton type="button" icon="pi pi-shopping-cart" onclick="PF('cart-shop').show()" rendered="#{loginController.user.rol == 'CUSTOMER'}"/>
+            					</p:badge>
+            					
+            				</p:toolbarGroup>
+            				
+        			</p:toolbar>
+        			<p:divider/>
+        			<p:sidebar widgetVar="log-out" position="right" style="padding:0px;" showCloseIcon="false">
+					      
+					      <div style="background-color:#164081;display: flex;">
+			        					<p:commandButton onclick="PF('log-out').hide()" icon="pi pi-chevron-right" style="background-color:#164081;border-width:0px" />
+			        					<p style="font-size: 1.7em;color: white; ">Tu cuenta</p>
+			        				
+			        	</div>
+					      <div class="container-account">
+					         
+					         <div style="text-align: center;display: block;margin-top: 2em;">
+						      	 <img src="../img/user-account.png" alt="user-account" style="height: 8em;"/>
+						         <br/>
+						          <h2>#{loginController.user.dataUser.toString()}</h2>
+					         </div>
+					         
+					          <div style="display: block;">
+					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+					      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
+
+					         </div>
+					      </div>
+					      
+					     
+					</p:sidebar>
+    			</h:form>
+  					    
+            </div>
+            	
+        </div>
+			<h:form id="form">
+				<div style="text-align: center;display: flex; padding-top: 8em;justify-content: space-around;">
+					<div>
+						<a href="adminProducts.xhtml">
+						     <img src="../img/product.png" alt="Administrar productos"/>
+						     
+						     </a>
+							<h1>Productos</h1>
+					</div>
+					<div>
+						<a href="adminUser.xhtml"><img src="../img/usuario.jfif" alt="Administrar productos"/></a>
+						<h1>Usuarios</h1>
+					</div>
+					
+					<div>
+						<a href="adminSales.xhtml"><img src="../img/ventas.png" alt="Administrar productos"/></a>
+						<h1>Ventas</h1>
+					</div>
+		
+				</div>
+				 
+					
+			</h:form>
+			<p:divider/>
+	</h:body>
+
+      
+</html>

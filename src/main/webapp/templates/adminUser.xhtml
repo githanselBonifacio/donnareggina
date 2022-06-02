@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="../css/menu.css" media="screen" />
+		<title>Administración de usuarios</title>
+	</h:head>
+	
+	<h:body>
+		<h1>GESTIÓN DE USUARIOS</h1>
+		
+		<h:form>
+			<div style="margin-left: 1.2em;">
+				<p:linkButton outcome="adminUserBack" icon="pi pi-arrow-left" />
+			</div>
+			
+		    <div class="card">
+		        <p:dataTable var="customer" value="#{customerData.customers}" reflow="true" rows="5" paginator="true">
+		        	
+		            <p:column headerText="Tipo de identificación" filterBy="#{customer.idetificationType}">
+		                <h:outputText value="#{customer.idetificationType}"/>
+		            </p:column>
+		            
+					<p:column headerText="Tipo de identificación" filterBy="#{customer.identificationNumber}" sortBy="#{customer.identificationNumber}">
+		                <h:outputText value="#{customer.identificationNumber}"/>
+		            </p:column>
+		            
+		            <p:column headerText="Nombre" responsivePriority="3" filterBy="#{customer.firsName}" sortBy="#{customer.firsName}">
+		                <h:outputText value="#{customer.firsName}"/>
+		            </p:column>
+		
+		            <p:column headerText="Apellido" responsivePriority="2" filterBy="#{customer.lastName}" sortBy="#{customer.lastName}">
+		                <h:outputText value="#{customer.lastName}"/>
+		            </p:column>
+		
+		       
+		            <p:column headerText="email" responsivePriority="4" filterBy="#{customer.email}">
+		                <h:outputText value="#{customer.email}"/>
+		            </p:column>
+		            
+		        </p:dataTable>
+		    </div>
+
+		</h:form>
+	
+	</h:body>
+	
+	
+</html>

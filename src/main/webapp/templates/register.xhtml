@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Registro</title>
+		<link rel="stylesheet" type="text/css" href="../css/login.css" media="screen"/>
+		<script type="text/javascript" src="js/loadContent.js"/>
+	</h:head>
+	
+	<h:body>
+		<div>
+			<p:messages id="messages" showDetail="true" closable="true" style="position:fixed;top:2em;">
+            	<p:autoUpdate/>
+       		 </p:messages>
+		
+		</div>
+
+        	
+		<div class="container" style="display:block">
+		
+         <header>Crear cuenta</header>
+         
+         <h:form>
+         
+         	
+            <div class="input-field">
+               <p:inputText id="userName" value="#{createAccount.userName}" required="true"/>
+               <p:message for="userName" />
+               <label>Email o Usuario</label>
+            </div>
+            
+            <div class="input-field">
+            <p:inputText id="password"  value="#{createAccount.password}" type="password" styleClass="pswrd" required="true"/>
+            <p:message for="password"/>
+               <label>Contraseña</label>
+            </div>
+            
+            <div class="input-field">
+            <p:inputText id="passwordRepeat"  value="#{createAccount.passwordRepeat}" type="password" styleClass="pswrd" required="true"/>
+            <p:message for="passwordRepeat"/>
+               <label>Confirmar contraseña</label>
+            </div>
+            
+            <div class="button">
+               <div class="inner"></div>
+               <p:commandButton type="submit" value="Enviar"  styleClass="p-mt-2"
+                         action="#{createAccount.createUser()}"/>     
+            </div>
+            
+            
+         </h:form>
+
+      </div>
+	
+	</h:body>
+
+      
+</html>

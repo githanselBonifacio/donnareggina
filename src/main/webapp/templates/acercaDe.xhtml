@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="../css/menu.css" media="screen" />
+		<title>Nosotros</title>
+	</h:head>
+	
+	<h:body>
+		<div class="container">
+				<div class="header">
+		            
+		            	<div>
+		                	<h1>DONNAREGGINA</h1>
+		            	</div>
+		            	
+		            	<div class = "container-menu">
+		  					
+		  					<h:form>
+		       
+		       		 			<p:toolbar styleClass="menu-bar" style="background: white;border:0px;">
+		         					<p:growl id="messages" showDetail="true" />
+		         					
+		            				<p:toolbarGroup>
+		             
+		       							<span class="ui-input-icon-left" >
+		        						 	<i class="pi pi-search"/>
+		        							<p:inputText placeholder="Buscar..." icon="pi pi-fw pi-search" style="font-size:1.2em;"/>
+		    							</span>
+		        			
+		            				</p:toolbarGroup>
+		            				
+									<p:toolbarGroup>
+				
+										 <p:growl id="growl" life="2000"/>
+										 
+										 <p:linkButton    value="Inicio"         outcome="acercaDe-index"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
+		    							 <p:linkButton    value="Tienda"         outcome="tienda.xhtml"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />
+		   								 <p:linkButton    value="Acerca de"      outcome="acercaDe.xhtml"  style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;" />
+		    							 <p:linkButton    value="Contacto"       outcome="contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />
+		                               	 <p:linkButton    value="Administración" outcome="admin.xhtml" rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>	
+									
+										
+									</p:toolbarGroup>
+					
+		            				<p:toolbarGroup align="right">
+		            				
+		            					<p:linkButton  outcome="login" value="Iniciar sesión" icon="pi pi-user" rendered="#{!loginController.user.isSession}" style="font-size:0.8em;background: none;color: black;border: 0;"/>
+		            					<p:commandButton  value="#{loginController.user.dataUser.toString()}" type="button" icon="pi pi-user" rendered="#{loginController.user.isSession}" onclick="PF('log-out').show()" 
+		            					                           style="background: none;color: black;border: 0;text-decoration: none;"/>
+		            					<p:autoUpdate/>
+		            					<p:tag value="#{loginController.user.rol}" rendered="#{loginController.user.rol == 'ADMIN'}"/>
+		            					<p:badge value="#{loginController.quantityInCart}" rendered="#{loginController.user.rol == 'CUSTOMER'}" style="background-color:#164081">
+		            						<p:commandButton type="button" icon="pi pi-shopping-cart" onclick="PF('cart-shop').show()" rendered="#{loginController.user.rol == 'CUSTOMER'}"
+		            						             style="background: none;color: black;border: 0;text-decoration: none;"/>
+		            					</p:badge>
+		            					
+		            				</p:toolbarGroup>
+		            				
+		        				</p:toolbar>
+		        				<p:divider/>
+				        			<p:sidebar widgetVar="cart-shop" position="right" style="padding:0px; " showCloseIcon="false">
+		        				
+					        				<div style="background-color:#164081;display: flex">
+					        					<p:commandButton onclick="PF('cart-shop').hide()" icon="pi pi-chevron-right" style="background-color:#164081;border-width:0px" />
+					        					<p style="font-size: 1.7em;color: white; ">Carrito de compras</p>
+					        				
+					        				</div>
+									        <p:dataTable var="productCart" value="#{cartResume.productsCart}" scrollable="true" scrollHeight="55%">
+									        	<p:column>
+										        	 <div class="product-list-item" style="display: flex; justify-content: space-between;padding-left: 1em;padding-right: 1em;">
+										        	 			<div>
+										        	 			 	<p:graphicImage value="#{productCart.image}" stream="false" style="width:6em;"/>
+										        	 			</div>
+										                   
+										                    	<div>
+										                    			<div class="product-list-detail">
+												                        	<div class="product-name" style="font-size: 1.2em;">#{productCart.nombre}</div>
+												          
+												                   	   </div>
+												                       <div class="product-list-action">
+												                            <h:outputText value="#{productCart.price}" style="font-size: 1.2em;" styleClass="product-price">
+												                            	<f:convertNumber currencySymbol="$" type="currency"/>
+												                            </h:outputText>
+								
+								                    					</div>
+								                    					<div class="product-list-detail">
+												                        	<div class="product-name" style="font-size: 1.2em;">Cantidad: #{productCart.quantity}</div>
+												          
+												                   	   </div>
+						                              			</div>
+										                    		
+										             </div>
+												                   
+									            </p:column>
+									   
+									        </p:dataTable>
+									        <p:divider/>
+									        <div style="position: relative;padding-left: 2em;">
+										        	<p style="font-size: 1.5em;margin-bottom: 0px;">Subtotal</p>
+										            <h:outputText value="#{cartResume.totalPrice}" style="font-size: 1.2em;" styleClass="product-price">
+												          <f:convertNumber currencySymbol="$" type="currency"/>
+												    </h:outputText>
+						
+									        </div>
+									        <div style="position:absolute;bottom: 2em;left:5.5em; ">
+									        	<div style="text-align: center;">
+									        		<p:commandButton value="Ver Carrito" style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
+									        	</div>
+									        	
+									        
+									        </div>
+									    </p:sidebar>
+						    
+						    
+			        		<p:sidebar widgetVar="log-out" position="right" style="padding:0px;" showCloseIcon="false">
+							      
+							      <div style="background-color:#164081;display: flex;">
+					        					<p:commandButton onclick="PF('log-out').hide()" icon="pi pi-chevron-right" style="background-color:#164081;border-width:0px" />
+					        					<p style="font-size: 1.7em;color: white; ">Tu cuenta</p>
+					        				
+					        	</div>
+							      <div class="container-account">
+							         
+							         <div style="text-align: center;display: block;margin-top: 2em;">
+								      	 <img src="../img/user-account.png" alt="user-account" style="height: 8em;"/>
+								         <br/>
+								          <h2>#{loginController.user.dataUser.toString()}</h2>
+							         </div>
+							         
+							          <div style="display: block;">
+							      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+							      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
+		
+							         </div>
+							      </div>
+							      
+							     
+							</p:sidebar>
+		        	
+		    			</h:form>
+		  					    
+		            </div>
+		           
+		      </div>
+		        
+		      <div>
+		      		<div style="display: flex;justify-content: center;padding: 0 1em 0 1em;">
+		      		
+		      			<img src="../img/costura1.jfif"  style="padding: 0 1em 0 1em; "/>
+		      			<img src="../img/costura2.jfif"  style="padding: 0 1em 0 1em"/>
+		      			<img src="../img/costura3.jfif"  style="padding: 0 1em 0 1em"/>
+		      		</div>
+		      		<h1>Nuestra historia</h1>
+		      		<div style="text-align: center;margin:0 20em 0 20em;font-family: serif;">
+		      		
+			      			<p >Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+					            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+					            voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
+					            
+					         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+					            cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+					            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+		      			
+		      		
+			      		
+		      		</div>
+		      		 
+		      <p:divider/>  
+		      </div>  
+		        
+		   
+		     <div class="foot">
+  			
+  				<div style="display: flex; justify-content: space-around;font-family: 'Josefin Sans';">
+    		
+    			<div style="text-align: center">
+    					<div>
+         					<h2>¿QUÉ HACEMOS</h2>
+         					<p >Fabricamos con la mejor calidad de telas</p>
+         					<p >Diseño a tu medida</p>
+         					<p >Tenemos en cuenta tu opinión</p>
+         					<p >Si tienes diseños, !cuentanos de él!</p>
+						</div>
+    			</div>
+    			
+    			<div style="text-align: center">
+    				    <div class="icon-foot" style="display: block;">
+         					<h2>SIGUENOS EN REDES</h2>
+         					<div>
+	         					<p:avatar   icon="pi pi-fw pi-facebook" size="large" style="margin-right:1em;"/>
+		         			
+		         				<p:avatar   icon="pi pi-fw pi-instagram" size="large"/> 
+         					</div>
+	         				
+         				
+         			   </div>	
+    			
+    			</div>
+    			
+    			<div style="text-align: center">
+    				   <div>
+         					<h2>¿NOS CUENTAS TUS DISEÑOS?</h2>
+         					<p >Donnaregina: confección y diseño de modas</p>
+         					<p>Barranquilla - Atlántico</p>
+         					<p >Tel: 300 xxx xx xx</p>
+         					<p >Mail. comercial@donnaregina.com.co</p>
+					  </div>
+    			
+    			</div>
+    		
+    		</div>				
+  			
+			</div>   
+		
+		</div>
+			
+	
+		
+	
+	</h:body>
+
+      
+</html>

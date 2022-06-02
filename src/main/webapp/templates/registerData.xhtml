@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:head>
+		<title>Registrar Datos</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<link rel="stylesheet" type="text/css" href="../css/login.css" media="screen"/>
+		<script type="text/javascript" src="js/loadContent.js"/>
+
+	</h:head>
+	
+	<h:body>
+	
+		<div>
+			<p:messages id="messages" showDetail="true" closable="true" style="position:fixed;top:2em;">
+            	<p:autoUpdate/>
+       		 </p:messages>
+		
+		</div>
+
+        	
+		<div>
+		
+         
+         
+         <h:form>
+         
+         	 <div class="container" style="width: 100%">
+         	 	<header>Registra tus datos</header>
+         	 	
+         	 	<div style="display:flex;padding-bottom:1em;">
+         	 	
+         	 		<div  style="width: 100%">
+         	 			
+         	 			<p:selectOneMenu id="option" value="#{createAccount.identificationType}" style="width:95%;margin-top:3.1em;padding-top:0.25em;padding-bottom:0.25em;right:0.4em;">
+		                  
+		                    <f:selectItem itemLabel="Cédula de ciudadania" itemValue="Cédula de ciudadania"/>
+		                    <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="Tarjeta de Identidad"/>
+		                    <f:selectItem itemLabel="Pasaporte" itemValue="Pasaporte"/>
+		                   
+		                </p:selectOneMenu>
+         	 			
+         	 		</div>
+         	 		
+         	 		<div class="input-field" >
+         	 		
+         	 			<div class="input-field">
+			               <p:inputText id="identificatorNumber" value="#{createAccount.identificatorNumber}" required="true"/>
+			               <p:message for="identificatorNumber" />
+			               <label>Numero de identificación</label>
+			           
+			            </div>
+         	 		
+         	 		</div>
+         	 		
+         	 	</div>
+         	 	<div style="display:flex">
+		         	
+		         		<div class="input-field" style="padding-right: 1em;">
+			               <p:inputText id="firsName" value="#{createAccount.firsName}" required="true"/>
+			               <p:message for="firsName" />
+			               <label>Primer Nombre</label>
+			           
+			            </div>
+			          
+			            <div class="input-field">
+			            
+				            <p:inputText id="secondName" value="#{createAccount.secondName}"/>
+						    <p:message for="secondName" />
+						    <label>Segundo nombre</label>
+			            </div>
+		         	
+		         	</div>
+		         	
+			        <div style="display:flex">
+			        
+			        	<div class="input-field" style="padding-right: 1em;">
+				            <p:inputText id="lastName"  value="#{createAccount.lastName}"   required="true"/>
+				            <p:message for="lastName"/>
+				            <label>Primer Apellido</label>
+		           		 </div>
+		            
+		                <div class="input-field">
+				            <p:inputText id="seconLastName"  value="#{createAccount.secondLastName}"   required="true"/>
+				            <p:message for="seconLastName"/>
+				            <label>Segundo Apellido</label>
+		           		 </div>
+		            
+			            
+			        
+			        </div>    
+		            
+		             <div style="display:flex">
+			        
+			        	<div class="input-field" style="padding-right: 1em;">
+				            <p:inputText id="dateBirth"  value="#{createAccount.birthDate}"  type="date"/>
+				            <p:message for="dateBirth"/>
+				            <label>Fecha de Cumpleaños</label>
+		           		 </div>
+		            	#{createAccount.birthDate}
+		                <div class="input-field">
+				            <p:inputText id="email"  value="#{createAccount.email}"  type="email" required="true"/>
+				            <p:message for="email"/>
+				            <label>Email</label>
+		           		 </div>
+		       
+			        
+			        </div>    
+		            
+		            <div class="button">
+			               <div class="inner"></div>
+			               <p:commandButton type="sutmit" value="Enviar"  styleClass="p-mt-2"
+			                         action="#{createAccount.registerDataUser()}"/>     
+			            </div>
+         	 
+         	 </div>
+		         	
+            
+            
+         </h:form>
+
+      </div>
+	
+	</h:body>
+
+      
+</html>

@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
+
+.bottom-shopp-container{
+	text-align: center;
+}
+
+.bottom-shopp button{
+	background-color :#4D77FF;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 1.7em;
+	color: var(--text-primary-color);
+	font-style: bold;
+	border-radius: 0.3em;
+	border-bottom-width: 0;
+	
+}
+
+.bottom-shopp button:hover {
+	border-bottom-width: 0;
+	background-color :rgb(0,50,125);
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 0.1em 0.5em 0 rgba(0,0,0,0.19);
+	color: var(--text-primary-color);
+}
+
+.bottom-shopp button:active {
+  background-color :56BBF1;
+  box-shadow: 0 0.2em #666;
+  transform: translateY(4px);
+	
+}
+.bottom-cart{
+		padding-top: 10px;
+}
+
+.bottom-cart button{
+	background-color :white;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 1em;
+	color: black;
+	font-style: bold;
+	border-radius: 0.3em;
+	
+
+}
+.bottom-cart button:hover {
+	border-bottom-width: 0;
+	background-color :#4D77FF;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 0.1em 0.5em 0 rgba(0,0,0,0.19);
+	color: var(--text-primary-color);
+}
+.bottom-cart button:active {
+  background-color :var( --default-primary-color);
+  box-shadow: 0 0.2em #666;
+  transform: translateY(4px);
+	
+}
