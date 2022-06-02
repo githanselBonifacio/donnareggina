@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Setup {
-	private String database;
+	
 	private String user;
 	private String password;
 	private String stringConexion;
@@ -16,7 +16,7 @@ public class Setup {
 	
 	public Setup() {
 		super();
-		this.database="donnareggina";
+	
 		this.user = "webadmin";
 		this.password = "11eZGOW8xG";
 		this.stringConexion = "jdbc:postgresql://node103810-env-8360.jelastic.saveincloud.net:5432/donnareggina";

@@ -6,13 +6,9 @@ import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.PrimeFaces;
 
 import co.com.donnareggina.database.Query;
 import co.com.donnareggina.model.User;

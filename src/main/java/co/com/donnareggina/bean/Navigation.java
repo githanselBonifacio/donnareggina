@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
