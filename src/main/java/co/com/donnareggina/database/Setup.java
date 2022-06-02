@@ -17,9 +17,9 @@ public class Setup {
 	public Setup() {
 		super();
 		this.database="donnareggina";
-		this.user = "postgres";
-		this.password = "1234";
-		this.stringConexion = "jdbc:postgresql://localhost:5432/donnareggina";
+		this.user = "webadmin";
+		this.password = "11eZGOW8xG";
+		this.stringConexion = "jdbc:postgresql://node103810-env-8360.jelastic.saveincloud.net:5432/donnareggina";
 		
 		try {
 			Class.forName("org.postgresql.Driver");
