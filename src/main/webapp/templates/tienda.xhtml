@@ -127,13 +127,23 @@
 			.category-list{
 				display: block;
 			}		
+			 #loading-icon {
+		       font-size: 8em;
+		       color: var(--primary-color);
 		</style>
 	</h:head>
 	
 	<h:body>
 		
 		<div class="header">
-            
+            	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+		         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				        <div class="p-text-center" style="padding: 2em 2em 2em 2em">
+				        	<br/>
+				            <i class="pi pi-spin pi-spinner loading-icon" id="loading-icon" aria-hidden="true"></i>
+			                <br/>
+				        </div>
+		         </p:dialog>
             	<div>
                 	<h1>DONNAREGGINA</h1>
             	</div>
@@ -274,12 +284,14 @@
 			<div class="container-tienda">
 			     
 			     <div class="filter" >
-			     <h2 style="font-size: 1.6em;">Comprar por...</h2>
+			     	<h2 style="font-size: 1.6em;">Comprar por...</h2>
 					<h:form>
 					
 					     <p:accordionPanel multiple="true" widgetVar="multipleFilter" >	
+					     	 
 					     	 <p:tab title="Categoría">
 					     	 	<p:outputLabel for="categorias" value="Selecionar" />
+					     	 	<br/>
 					     	 	<p:selectCheckboxMenu id="categorias" value="#{filterStored.selectedCategory}" label="Selccionar" style="min-width: 15rem" 
                                   multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" filterPlaceholder="Buscar..." >
 					                <p:ajax event="itemUnselect" listener="#{filterStored.onItemUnselect}"/>
@@ -291,7 +303,7 @@
 							 <p:tab title ="Precio">
 							 	<div style="text-align: center;padding: 0 1em 0 1em">
 									
-								         <p:inputNumber id="precio" value="#{filterStored.precio}" style="margin: 1em 0em 1em 0em;" symbol="$"/>
+								         <p:inputNumber id="precio" value="#{filterStored.precio}" style=" margin:1em 1em 1em 1em;" symbol="$"/>
 								         
 								         <p:slider for="precio" minValue="25000.00" maxValue="500000.00" step="5000.00" >
 								              <p:ajax event="slideEnd" listener="#{filterStored.onSlideEnd}"/>
@@ -305,6 +317,7 @@
 				
 							 <p:tab title="Color">
 							 	<p:outputLabel for="color" value="Selecionar" />
+							 	<br/>
 					     	 	<p:selectCheckboxMenu id="color" value="#{filterStored.selectedColors}" style="min-width: 15rem" 
                                   multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" filterPlaceholder="Buscar..." >
 					                <p:ajax event="itemUnselect" listener="#{filterStored.onItemUnselect}"/>
@@ -315,6 +328,7 @@
 						
 							 <p:tab title="Talla">
 							  	<p:outputLabel for="size" value="Selecionar" />
+							  	<br/>
 					     	 	<p:selectCheckboxMenu id="size" value="#{filterStored.selectedsizes}"  style="min-width: 15rem" 
                                   multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" filterPlaceholder="Buscar..." >
 					                <p:ajax event="itemUnselect" listener="#{filterStored.onItemUnselect}"/>
