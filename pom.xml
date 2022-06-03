@@ -11,7 +11,7 @@
 
   <name>donnareggina Maven Webapp</name>
  
-  <url>http://www.donnareggina.com</url>
+  <url>https://donnareggina.herokuapp.com/</url>
   <repositories>
 	<repository>
 		<id>jd-repo</id>
