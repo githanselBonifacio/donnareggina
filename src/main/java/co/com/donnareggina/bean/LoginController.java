@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+
 import co.com.donnareggina.database.Query;
 import co.com.donnareggina.model.User;
 
@@ -90,7 +92,8 @@ public class LoginController implements Serializable{
 			user.setSession(true);
 			this.quantityInCart = query.getNumberProductInCart(this.user.getDataUser().getIdentificationNumber());
 			reset();
-			return "home";	
+			
+			return "/faces/index.xhtml";
 			
 			
 	
@@ -98,7 +101,7 @@ public class LoginController implements Serializable{
 			 reset();
 			 setUser(new User());
 			 error();
-			 return null;
+			 return "";
 		}
 		
 	}

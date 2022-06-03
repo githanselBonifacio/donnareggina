@@ -24,7 +24,7 @@ public class CartResumeView {
 	@PostConstruct
 	public void init() {
 		Query query = new Query();
-		this.productsCart = query.getProductCartByCustomer("1140883857");
+		this.productsCart = query.getProductCartByCustomer(loginController.getUser().getIdUser());
 		this.totalPrice = 0.0;
 		for(Product product: this.productsCart) {
 			this.totalPrice +=product.getPrice();
@@ -34,15 +34,32 @@ public class CartResumeView {
 
 	
 
+
+	public LoginController getLoginController() {
+		return loginController;
+	}
+
+
+
+
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
+	}
+
+
+
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
 
 
 
+
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
 
 
 
@@ -57,7 +74,7 @@ public class CartResumeView {
 	}
 
 
-
+/*
 	public LoginController getLoginController() {
 		return loginController;
 	}
@@ -65,5 +82,5 @@ public class CartResumeView {
 	public void setLoginController(LoginController loginController) {
 		this.loginController = loginController;
 	}
-	
+*/	
 }

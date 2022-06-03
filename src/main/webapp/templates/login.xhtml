@@ -15,6 +15,13 @@
 		<link rel="stylesheet" type="text/css" href="../css/login.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen"/>
 		<script type="text/javascript" src="js/loadContent.js"/>
+		
+		<style>
+		    #loading-icon {
+		       font-size: 8em;
+		       color: var(--primary-color);
+    		}
+		</style>
 	</h:head>
 	
 	<h:body>
@@ -54,6 +61,14 @@
  
          </h:form>
          
+         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		        <div class="p-text-center" style="padding: 2em 2em 2em 2em">
+		        	<br/>
+		            <i class="pi pi-spin pi-spinner loading-icon" id="loading-icon" aria-hidden="true"></i>
+	                <br/>
+		        </div>
+         </p:dialog>
          <div class="auth">
             Iniciar sesión con
          </div>

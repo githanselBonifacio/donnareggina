@@ -1,6 +1,9 @@
 package co.com.donnareggina.database;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -222,7 +225,7 @@ public class Query extends Setup{
 	}
 	
 	public boolean deleteProductById(String code) {
-		Statement statement;
+		
 		try {
 		
 			PreparedStatement pstm =connection.prepareStatement(String.format("DELETE FROM product WHERE code = '%s'",code ));
@@ -275,6 +278,22 @@ public class Query extends Setup{
         }
         return false;
 		
+	}
+	
+	@SuppressWarnings("resource")
+	public byte[] getImageLocal(String path) {
+		 FileInputStream fis = null;
+		   
+	     File file = new File(path);
+	     try {
+			fis = new FileInputStream(file);
+			return fis.readAllBytes();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new byte[0];
+			
+		}
 	}
 	
 	public ArrayList<byte[]> getImages(String idImageApp) {
@@ -461,15 +480,16 @@ public class Query extends Setup{
 	
 		
 	}
-	public List<Product> getProductCartByCustomer(String identificationNumber) {
+	public List<Product> getProductCartByCustomer(int idUser) {
 		try {
 		
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT *"
 					+ " from product"
-					+ " INNER JOIN shoppingcart"
-					+ " ON shoppingcart.idproduct = product.code"
-					+ " WHERE shoppingcart.idcustomer = '"+identificationNumber+"';" );
+					+ " INNER JOIN shoppingcart ON shoppingcart.idproduct = product.code"
+					+ " INNER JOIN customer ON customer.identificationnumber = shoppingcart.idcustomer"
+					+ " INNER JOIN users ON users.iduser = customer.iduser"
+					+ " WHERE users.iduser ="+idUser+";");
 			
 		
 			List<Product> listProduct = buildProduct(resultSet);
