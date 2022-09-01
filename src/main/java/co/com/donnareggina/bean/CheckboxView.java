@@ -84,7 +84,7 @@ public class CheckboxView {
 		this.selectedOptions = selectedOptions;
 	}
 
-	public void onItemUnselect(UnselectEvent event) {
+	public <T> void onItemUnselect(UnselectEvent<T> event) {
 	        FacesMessage msg = new FacesMessage();
 	        msg.setSummary("Item unselected: " + event.getObject().toString());
 	        msg.setSeverity(FacesMessage.SEVERITY_INFO);

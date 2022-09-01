@@ -1,6 +1,7 @@
 @charset "ISO-8859-1";
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
 
+
 .menu-bar {
 	background: white;
 	border:0px;
@@ -30,7 +31,7 @@
 	background: none;
 	color: black;
 	border: 0;
-	color: #4D77FF;
+	color: rgb(0, 44, 196);
 	font-style: bold;
 }
 .menu-bar button:active {

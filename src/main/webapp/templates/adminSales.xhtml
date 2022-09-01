@@ -14,20 +14,487 @@
 		<link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="../css/menu.css" media="screen" />
 		<title>Administración de ventas</title>
+		
+		<style>
+       
+	        body .ui-panelgrid .ui-panelgrid-cell {
+	            background-color: transparent;
+	        }
+	
+	        .my-heading-row {
+	            background-color: var(--surface-c);
+	            font-weight: bold;
+	            }
+	        .fields{
+	       		 padding: 0.5em 0.5em 0.5em 0.5em;
+	         
+	        }
+	        .table-column{
+	        	padding-right: 8em;
+	        	font-weight: bold;
+	        }
+	        .dataUser{
+	        	display: flex;
+	        	justify-content:space-around;
+	        }
+	        .dataUser input{
+	        	margin: 0.5em 0.5em 0.5em 0.5em
+	        }
+	        .listDocument{
+	        
+	        	margin-left: 0.5em;
+	        	margin-top: 0.5em;
+	        	padding-right:10em;
+	        	height: 2.5em;
+	        }
+	        .radioButtons table{
+	        	margin: 0 auto;
+	        }
+	        .table-detail-sale table{
+	        	margin: 0 auto;
+	        	
+	        	
+	        }
+	        .table-detail-sale td {
+	        	padding-top: 0.2em;
+	        	padding-bottom: 0.2em;
+	        	
+	        }
+	        
+    </style>
 	</h:head>
 	
 	<h:body>
+      			
 		<h1>GESTION DE VENTAS</h1>
-		<h:form>
+		<h:form id = "form">
 		
 			<div style="margin-left: 1.2em;">
 				<p:linkButton outcome="adminSalesBack"  icon="pi pi-arrow-left" />
 			</div>
 		
-		</h:form>
+			
+			<p:growl id="growl" showDetail="true" />
+			<p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
 		
+			<p:tabView id="tabMain" style="margin: 0em 4em 0em 4em">
+       
+		       		<p:tab id="consultSale" title="Consultar ventas" >
+		       		
+		       			<p:dataTable id="basicDT" var="sale" value="#{sales.salesTable}" 
+		       			        scrollable="true" scrollHeight="25em" paginator="true" rows="10"
+		       			          emptyMessage="No se encontraron registros">
+		       			        
+				            <p:column headerText="Referencia" filterBy="#{sale.billNumber}">
+				                <h:outputText value="#{sale.billNumber}" />
+				            </p:column>
+				
+				            <p:column headerText="identificación Cliente" filterBy="#{sale.idCustomer}">
+				                <h:outputText value="#{sale.idCustomer}" />
+				            </p:column>
+				
+				            <p:column headerText="Fecha" filterBy="#{sale.dateSale}" filterMatchMode="contains">
+				                <h:outputText value="#{sale.dateSale}" />
+				            </p:column>
+				
+				           
+				            
+				            <p:column headerText="Estado" filterBy="#{sale.status}">
+				                <h:outputText value="#{sale.status}" filterBy="#{sale.statusr}"/>
+				            </p:column>
+				
+				            <p:column style="width:3rem;text-align: center">
+				                <p:commandButton update="form:saleDetail" oncomplete="PF('saleDialog').show()"
+				                                 icon="pi pi-search" title="View" action="#{saleDetail.addSaleDetail()}">
+				                    <f:setPropertyActionListener value="#{sale}"
+				                                                 target="#{sales.sale}"/>
+				                </p:commandButton>
+				            </p:column>
+				        </p:dataTable>
+		       		
+		       		</p:tab>
+		       		
+		       		<p:tab id="sendSale" title="Realizar venta" >
+		       		
+					       			<p:panel id = 'content'>
+				   
+							             <div class="field col-12 md:col-4" style="display:flex;justify-content: flex-start;flex-basis: 0em auto;">
+							             	
+							             	<div >
+							             	
+							             		<div class="card"  >
+												    <p:panelGrid columns="2" id = "imageDinamic">
+												        <f:facet name="header">
+												            <p:graphicImage  value="#{sales.image}" stream="false" style="width:70%;"/>
+												        </f:facet>
+												
+												        <h:outputText value="Nombre:"/>
+												        <h:outputText value="#{sales.product.nombre}"/>
+												
+												        <h:outputText value="Descripción"/>
+												        <h:outputText value="#{sales.product.description}"/>
+												
+												        <h:outputText value="Color"/>
+												        <h:outputText value="#{sales.product.color}"/>
+												
+												        <h:outputText value="Talla"/>
+												        <h:outputText value="#{sales.product.size}"/>
+												    </p:panelGrid>
+										       </div>
+							             	
+							             		<div class="field col-12 md:col-4"  style="text-align: center;margin-top: 2em;">
+							        	
+						
+									                <div class="fields">
+									                
+										                <p:selectOneMenu value="#{sales.code}" filter="true" filterMatchMode="contains" style="width: 18em">
+														
+															<f:selectItems value="#{sales.listCode}"/>
+															<p:ajax update="content" process="@this" listener="#{sales.onChangeCode()}"/>	
+													
+														</p:selectOneMenu>
+													 	<h:outputText id="codeid" value="#{sales.code}" rendered="false"/>
+									                
+									                </div>
+									                
+								
+													<div class="fields">
+														<p:spinner id="Cantidad" value="#{sales.cantidadProductos}" min="1" style="width: 18em">
+										         		
+										         			<p:ajax update="display" />
+										         		
+										         		</p:spinner>
+												        <h:outputText id="display" value="#{sales.cantidadProductos}" style="display:none;"/>
+													</div>
+									         		
+											  		<div class="fields">
+												  		<p:commandButton disableOnAjax="true" value="Agregar" 
+										             	           actionListener ="#{sales.addProduct()}" update="content"
+										             	           process="@this" 
+										             	           style="width: 18em" />
+											  		</div>
+						
+							             		</div>
+							             	
+							             	</div>
+							             	
+							             	<p:divider layout="vertical"/>
+							             	
+							             	<div>
+							             	
+							             	   <p:dataTable id="dt-products"  var="product" value="#{sales.productsShop}" 
+										            reflow="true" styleClass="products-table" selection="#{sales.productsShop}"
+										            rowKey="#{product.code}" rows="10" style="margin: 0.5em 0.5em 0.5em 0.5em;"  scrollable="true" scrollHeight="450"
+										            emptyMessage="No hay productos agregados">
+										         
+											            <p:column >
+											                <p:graphicImage value="#{product.image}" stream="false" style="width:4em;"/>
+											            </p:column>
+											
+											            <p:column headerText="Referencia">
+											                <h:outputText value="#{product.code}" />
+											            </p:column>
+											            
+											            <p:column headerText="Nombre">
+											                <h:outputText value="#{product.nombre}" />
+											            </p:column>
+											    
+											            <p:column headerText="Precio">
+											                <h:outputText value="#{product.price}" style="font-weight: 700">
+											                    <f:convertNumber currencySymbol="$" type="currency" />
+											                </h:outputText>
+											            </p:column>
+											            
+											            <p:column headerText="Categoría">
+											                <h:outputText value="#{product.category}" />
+											            
+											            </p:column>
+											            
+											            <p:column headerText="Talla">
+											                <h:outputText value="#{product.size}" />
+											            
+											            </p:column>
+											            
+											            <p:column headerText="Cantidad">
+												            <h:outputText value="#{product.quantity}" style="font-weight: 700" />
+												         </p:column>  
+												          
+											            <p:column>
+											                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+											                    oncomplete="PF('deleteProductDialog').show()">
+											                    <f:setPropertyActionListener value="#{product}" target="#{sales.product}" />
+											                </p:commandButton>
+											            </p:column>
+										
+										        </p:dataTable>
+										        <p:divider  align="center" ><b>Resumen</b></p:divider>
+										
+											        <div style="display: flex;justify-content: flex-end ;">
+												        	
+												        	<div class="card" >
+																	<div style="display: flex;">
+																		<h:outputText value="Subtotal" styleClass="table-column"/>
+																		<span style="color: white;">....</span>
+																		<div>
+																	        <h:outputText id="subTotal" value="#{sales.subTotal}" >}
+																	        
+																	        	<f:convertNumber type="currency" pattern="¤###,###.###" currencySymbol="$" />
+																	        
+																	        </h:outputText>
+																	    </div>    
+																	</div>
+															        <div style="display: flex;">
+																        <h:outputText value="Transporte" styleClass="table-column"/>
+																        <div>
+																	        <h:outputText value="#{sales.priceTransport}" >
+																	        
+																	        	<f:convertNumber type="currency" pattern="¤###,###.###" currencySymbol="$" />
+																	        
+																	        </h:outputText>
+																        </div>
+															        </div>
+															        <div style="display: flex;">
+																        <h:outputText value="Impuestos" styleClass="table-column"/>
+																        <div>
+																	          <h:outputText value="#{sales.impuestos}" >
+																		        
+																		        	<f:convertNumber type="currency" pattern="¤###,###.###" currencySymbol="$" />
+																		        	
+																		      </h:outputText>
+																          
+																        </div>
+																	        
+															        </div>
+															   		<div style="display: flex;">
+																        <h:outputText value="Total" styleClass="table-column"/>
+																        <div>
+																	       <span style="color: white;">............</span>
+																		     <h:outputText value="#{sales.total}" >
+																		        
+																		        <f:convertNumber type="currency" pattern="¤###,###.###" currencySymbol="$" />
+																		        
+																		      </h:outputText>
+																		 
+																		</div>   
+															        </div>
+													
+														    </div>
+											        	
+											        	</div>
+											        	<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+												            message="¿Desea eliminar el producto?" header="Confirm" severity="warn">
+												            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{sales.deleteProduct()}" update="dt-products"
+												                process="@this" oncomplete="PF('deleteProductDialog').hide()" />
+												            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+												                onclick="PF('deleteProductDialog').hide()" />
+												        </p:confirmDialog> 
+							
+							             		
+							             		</div>
+							             		
+							             	</div>
+							             
+							  
+								    </p:panel>
+								    
+								    <div>
+							
+							<h2>Realizar pedido</h2>
+							
+					   </div>		
+							
+				        
+					    <div>
+							
+							<h2>Enviar Pedido</h2>
+							
+							 <p:outputPanel id = 'send' style="margin: 0.5em 0.5em 0.5em 0.5em;">
+							        <h2>¿El usuario esta registrado?</h2>
+							 		<div class="radioButtons">
+							 			
+								 			<p:selectOneRadio id="console" value="#{sales.isUserRegister}" >
+													<f:selectItem itemLabel="Si" itemValue="true"/>
+													<f:selectItem itemLabel="No" itemValue="false"/>
+													<p:ajax update="send"/>
+											</p:selectOneRadio>
+							 			
+										
+										<br/>
+							 		</div>
+									 
+									 				    
+							 		<div class="field col-12 md:col-4" style="display:flex;justify-content: space-evenly;">
+							 				
+							 				<div>
+							 			
+							 				 <p:outputPanel  rendered="#{sales.isRegister()==false}" style="width: 35em;">
+							 				       
+							 				       <h2>Ingrese datos del cliente</h2>
+									 				 <div class="grid ui-fluid">
+									 				 	
+									 				 	<div class="dataUser">
+											                    <p:selectOneMenu id="option" value="#{sales.customer.idetificationType}" styleClass="listDocument">
+												                    <f:selectItem itemLabel="tipo identificación"        itemValue="" noSelectionOption="true"/>
+												                    <f:selectItem itemLabel="Cédula ciudadanía"          itemValue="Cédula ciudadanía"/>
+												                    <f:selectItem itemLabel="Pasaporte"                  itemValue="Pasaporte"/>
+												                    <f:selectItem itemLabel="Otro"                       itemValue="Otro"/>
+			                   								    </p:selectOneMenu>
+			                   								    
+											                    <p:inputText placeholder="número de identificación" value="#{sales.customer.identificationNumber}"/>
+											            </div>
+									 				 	
+											            <div class="dataUser" >
+											                    <p:inputText placeholder="Primer Nombre" value="#{sales.customer.firsName}"/>
+											                    <p:inputText placeholder="Segundo nombre" value="#{sales.customer.secondName}"/>
+											                    
+											            </div>
+											            
+											            <div class="dataUser" >
+											                    <p:inputText placeholder="Primer Apellido" value="#{sales.customer.lastName}"/>
+											                    <p:inputText placeholder="Segundo Apellido" value="#{sales.customer.secondLastname}"/>
+											            </div>
+											
+											            <div class="dataUser" >
+											                    <p:inputText  value="#{sales.customer.phone}" placeholder="Telefono"/> 
+											                    <p:inputText placeholder="correo" value="#{sales.customer.email}"/>             
+											            </div>
+											
+											           
+											        </div>
+											        
+							 				    </p:outputPanel>
+							 				</div>
+							 				<p:divider layout="vertical"/>
+							 				
+							 				<p:outputPanel rendered="#{sales.isRegister()==false}" style="width: 35em;">
+							 				       <h2>Ingrese dirección de envío</h2>
+									 				 <div class="grid ui-fluid">
+									 				 	
+									 				 	
+											            <div class="dataUser" >
+											                   <p:selectOneMenu  value="#{sales.addresser.mainAvenueType}" styleClass="listDocument">
+												                    <f:selectItem itemLabel="calle"        itemValue="calle"/>
+												                    <f:selectItem itemLabel="carrera"      itemValue="carrera"/>
+												                    <f:selectItem itemLabel="avenida"      itemValue="avenida"/>
+												                 
+			                   								    </p:selectOneMenu>
+											                    <p:inputText placeholder="eje. 20a ,38..." value="#{sales.addresser.mainAvenueNumber}"/>
+											                    
+											                    <div style="padding-top: 1em;">#</div>
+											                    <p:inputText placeholder="eje. 30A, 15..." value="#{sales.addresser.secondAvenueNumber}"/>
+											                    <div style="padding-top: 1em;">-</div>
+											                    <p:inputText placeholder="eje. 50, 30..." value="#{sales.addresser.homeNumber}"/>
+											                    
+											            </div>
+											            
+											            <div class="dataUser" >
+											                    <p:inputText placeholder="Departamento" value="#{sales.addresser.department}"/>
+											                    <p:inputText placeholder="Municipio" value="#{sales.addresser.minicipally}"/>
+											            </div>
+											
+											            <div class="dataUser" >
+											                   <p:inputTextarea rows="5" cols="33" placeholder="Descripción adicional..." value="#{sales.addresser.additonalDescription}"/>
+											                       
+											            </div>
+											
+											           
+											        </div>
+							 				    </p:outputPanel>
+							 				
+							 			
+							 		</div>
+							 		
+							 
+							 </p:outputPanel>
+							 <div  style="text-align: center;margin-bottom: 5em;margin-top: 2em;">
+								 <p:commandButton disableOnAjax="true" value="Agregar" type="submit"
+								             	           actionListener ="#{sales.send()}"
+								             	            ajax="false"
+								             	           style="width: 18em;text-align: center;" />
+								             	           
+			
+							 </div>
+
+						</div>
+		       		
+		       		</p:tab>
+		       		
+		       		<p:tab id="sendProduct" title="Realizar envío">
+		       		
+		       		
+    
+       		        </p:tab>
+         
+       
+           </p:tabView>
+       	   
 	
+		 <p:dialog header="Detalle de venta" widgetVar="saleDialog" modal="true" showEffect="fade"
+              hideEffect="fade" resizable="false" width="70%" >
+			        <p:scrollPanel  id="saleDetail" style="text-align:center;width:100%;height:30em">
+			        	<h2>Productos</h2>
+			        	<div style="margin: 2em 2em 2em 2em">
+			        	
+			        		<p:dataTable id="basicDT2" var="product" value="#{saleDetail.listProduct}" scrollable="true" scrollHeight="250">
+			        		
+			        			 <p:column  headerText="Imagen">
+										<p:graphicImage value="#{product.image}" stream="false" style="width:4em;"/>
+								</p:column>
+			        		
+					            <p:column headerText="Referencia">
+					                <h:outputText value="#{product.code}" />
+					            </p:column>
+					
+					            <p:column headerText="Nombre">
+					                <h:outputText value="#{product.nombre}" />
+					            </p:column>
+					
+					            <p:column headerText="Categoria">
+					                <h:outputText value="#{product.category}" />
+					            </p:column>
+					
+					            
+					            <p:column headerText="Cantidad">
+					                <h:outputText value="#{product.quantity}" />
+					            </p:column>
+					
+					         
+					        </p:dataTable>
+			        	
+			        	</div>
+			        	<h2>Datos del cliente</h2>
+			        	<div class="table-detail-sale">
+			        		
+				        		<p:panelGrid columns="2" >
+					    			
+		
+						        		<h:outputText value="Nombre:" style="font-weight: bold"/>
+						        		<h:outputText value="#{saleDetail.nameFull}"  />
+						        		
+						        		<h:outputText value="Numero de identificación:" style="font-weight: bold"/>
+						                <h:outputText value="#{saleDetail.customer.identificationNumber}"  />
+					        		
+		                                <h:outputText value="Dirección de envío:" style="font-weight: bold"/>
+		                                <h:outputText value="#{saleDetail.addresserFull}"  />
+					        		
+		
+						        		<h:outputText value="Descripción adicional:" style="font-weight: bold"/>
+						        		<h:outputText value="#{saleDetail.addresserSend.additonalDescription}" />
+					        	
+					    			
+					    			</p:panelGrid>
+			        		
+			    		</div>	
+
+			        </p:scrollPanel >
+			    </p:dialog>
+         		<p:dialog header="Se registró venta" widgetVar="confirmSale" minHeight="40" width="350" showEffect="fade" modal="true">
+         		
+         			Referencia : <h:outputText value="#{sales.saleSend.billNumber}" style="font-weight: bold"/>
+					
+				</p:dialog>
+		</h:form>
+
 	</h:body>
-	
-	
+
 </html>

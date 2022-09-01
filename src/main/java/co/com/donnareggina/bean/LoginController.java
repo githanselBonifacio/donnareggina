@@ -79,11 +79,10 @@ public class LoginController implements Serializable{
 
 	    }
 	 
-	public String validateUsernamePassword() {
+	public void validateUsernamePassword() {
 		
 		Query query = new Query();
 		ArrayList<User> userResponse = query.getUserAccount(userName,password);
-		
 		if(!userResponse.isEmpty()) {
 			
 			corret();
@@ -92,26 +91,24 @@ public class LoginController implements Serializable{
 			user.setSession(true);
 			this.quantityInCart = query.getNumberProductInCart(this.user.getDataUser().getIdentificationNumber());
 			reset();
+			PrimeFaces.current().executeScript("location.href = 'http://localhost:8082/donnareggina/faces/index.xhtml'");
 			
-			return "/faces/index.xhtml";
 			
-			
-	
+		
 		}else {
 			 reset();
 			 setUser(new User());
 			 error();
-			 return "";
+			
 		}
 		
 	}
-	public String logout() {
+	public void logout() {
 		 setUser(new User());
 		 setUserName("");
 		 setPassword("");
-		 return "/index.xhtml";	
-		
-		 
+		 PrimeFaces.current().executeScript("location.href = 'http://localhost:8082/donnareggina/faces/index.xhtml'");	
+
 	}
 	
 	

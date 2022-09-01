@@ -13,11 +13,11 @@
 	
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 		<link rel="stylesheet" type="text/css" href="css/mainIndex.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="css/card-mine.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="css/mainIndex.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="css/botton.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="css/menu.css" media="screen" />
-		<script type="text/javascript" src="js/loadContent.js"/>
+	
 		<title>Donnareggina</title>
 		<style>
 		    #loading-icon {
@@ -28,14 +28,7 @@
 	</h:head>
 
 	<h:body>
-		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-		        <div class="p-text-center" style="padding: 2em 2em 2em 2em">
-		        	<br/>
-		            <i class="pi pi-spin pi-spinner loading-icon" id="loading-icon" aria-hidden="true"></i>
-	                <br/>
-		        </div>
-         </p:dialog>
+		
 		<div class="container">
 	
         	<div class="header">
@@ -63,11 +56,11 @@
 							<p:toolbarGroup>
 		
 								
-								 <p:linkButton  value="Inicio"         outcome="index.xhtml"               style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>           
-    							 <p:linkButton  value="Tienda"         outcome="templates/tienda.xhtml"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-   								 <p:linkButton  value="Acerca de"      outcome="templates/acercaDe.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-    							 <p:linkButton  value="Contacto"       outcome="templates/contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-                               	 <p:linkButton  value="Administración" outcome="templates/admin.xhtml"    rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>	
+								 <p:linkButton outcome="index.xhtml"              value="Inicio"           style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>           
+    							 <p:linkButton outcome="templates/tienda.xhtml"   value="Tienda"           style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+   								 <p:linkButton outcome="templates/acercaDe.xhtml" value="Acerca de"        style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+    							 <p:linkButton outcome="templates/contacto.xhtml" value="Contacto"         style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+                               	 <p:linkButton outcome="templates/admin.xhtml"    value="Administración"   rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>	
 							
 								
 							</p:toolbarGroup>
@@ -139,7 +132,7 @@
 							        	
 							        
 							        </div>
-							    </p:sidebar>
+					</p:sidebar>
 				    
 				    
 	        		<p:sidebar widgetVar="log-out" position="right" style="padding:0px;" showCloseIcon="false">
@@ -158,7 +151,7 @@
 					         </div>
 					         
 					          <div style="display: block;">
-					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide()}"
 					      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
 
 					         </div>
@@ -185,7 +178,7 @@
 			<p:divider/>	
 			<h1 class="titlesMain">Novedades</h1>
 			
-			<h:form id="form">
+			<h:form id="form-carroucel">
 				 
 				 
 				 <div class="card">
@@ -233,16 +226,19 @@
 			                			</div>
 			            			</div>
             			
-        			</p:carousel>
+        			        </p:carousel>
 				 
-				    </div>
-				 	
-        				<p:dialog header="Cuenta administrativa" widgetVar="manageCartAdmin" minHeight="40" width="350" showEffect="fade">
-					    	<p class="p-m-0"> Su cuenta es de tipo administrativa no hay carrito de compras asociado</p>
+				         </div>
+				    
+				 </h:form>
+        		<p:dialog header="Cuenta administrativa" widgetVar="manageCartAdmin" minHeight="40" width="350" showEffect="fade">
+					<p class="p-m-0"> Su cuenta es de tipo administrativa no hay carrito de compras asociado</p>
 					   
-						</p:dialog>
+				</p:dialog>
+				
+				<h:form id="form-diagCart">
 					
-				    	<p:dialog header="Agregar al carrito" modal="true" widgetVar="manageCartCustomer"  width="75%" showEffect="fade">
+				    	<p:dialog id="diagCart" header="Agregar al carrito" responsive="true" modal="true" widgetVar="manageCartCustomer"  showEffect="fade">
 						    
 						    <p:outputPanel id="detai-product-add-cart">
 						    
@@ -279,35 +275,41 @@
 						                   
 											        <div class="text-size-view" id="text-size#{crudView.selectedProduct.size}">
 														  
-														 	 <p:tag styleClass="p-mr-2" icon="pi pi-tag" value="#{manageCart.selectedProduct.category}" style="font-size:1em;background-color: white;color:black"/>
+														<p:tag styleClass="p-mr-2" icon="pi pi-tag" value="#{manageCart.selectedProduct.category}" style="font-size:1em;background-color: white;color:black"/>
 															
 													</div>
+													
 													
 												    <div class="p-field p-col-12 p-md-4">
 												    
 												    	<div class="item-card-cart" >
 												    	
-												         <p:panel  style="margin-bottom:10px;">
-													            <h:panelGrid columns="2" cellpadding="5">
-													             
-													                <p:selectOneMenu id="color" value="#{manageCart.selectedColor}" style="width:150px">
-													                    <p:ajax listener="#{basicView.onCountryChange}" update="size"/>
-													                    <f:selectItem itemLabel="Color" itemValue="" noSelectionOption="true"/>
-													                    <f:selectItems value="#{manageCart.colors}"/>
-													                </p:selectOneMenu>
+												         	<p:outputLabel for="color" value="seleccionar color" />
+												         	<br/>
+												         	
+														     <p:selectOneMenu id="color" value="#{manageCart.selectedColor}" style="width:150px">  
+														           <f:selectItems value="#{manageCart.colors}"/>
+														           <p:ajax  process="@form"  event="change" listener="#{manageCart.onChangeColor}"/>
+														      </p:selectOneMenu>
+														      <p:poll interval="2"  update="color"/>
+															  <br />
+															  <br/>
+															  <p:outputLabel for="size" value="seleccionar talla"/>
+															  <br/>
+														      <p:selectOneMenu id="size" value="#{manageCart.selectedSize}" style="width:150px">
+														                
+														            <f:selectItems value="#{manageCart.selectedProduct.category}"/>
+														           <p:autoUpdate/>
+														      </p:selectOneMenu>
+													             	
+													       <h2 class="text-center">
+													            color:<h:outputText id="txt_count" value="#{manageCart.selectedColor}"/>-
+													        </h2>
 													
-													               
-													                <p:selectOneMenu id="size" value="#{manageCart.selectedSize}" style="width:150px">
-													                    <f:selectItem itemLabel="Talla" itemValue="" noSelectionOption="true"/>
-													                    <f:selectItems value="#{manageCart.selectedSize}"/>
-													                </p:selectOneMenu>
-													                
-													            </h:panelGrid>
-										          			</p:panel>
-                
-												    		
-												    	</div>
-												    	
+													        <p:poll interval="2"  update="txt_count"/>
+													
+                												    		
+												    	</div>										    	
 												    	
 												    </div>
 										             
@@ -326,13 +328,14 @@
 								             		</div>
 								             		
 								             		<div class="p-field p-col">
-									                    <p:outputLabel for="quantity" style="padding-right:0.5em;">Cantidad</p:outputLabel>
+									                    <p:outputLabel for="quantity" style="padding-right:0.5em;" value="cantidad"/>
+									                    <br/>
 									                    <p:spinner id="quantity" min="1" value="#{manageCart.selectedProductQuantity}"/>
 									                </div> 
 													
 													 <div class="p-col-5 p-d-flex p-ai-center p-jc-center">
 											            <p:commandButton type="submit" value="Agregar" icon="pi pi-shopping-cart" class="ui-button-success" style="margin-top: 1em;" 
-											                action="#{manageCart.addCart}"  />
+											                  action="#{manageCart.addCart()}"/>
 											        </div>
 										         
 										         </div>	
@@ -344,32 +347,36 @@
 						    		</div>
 						    	
 			                   
-						    </p:outputPanel>
+						        </p:outputPanel>
 						    
 						   
-					</p:dialog>
+					       </p:dialog>
+					</h:form>
 					
-					<p:dialog header="Iniciar sesión" modal="true" widgetVar="goInitSesion" minHeight="40" width="350" showEffect="fade">
-						    <p class="p-m-0"> Para agregar al carrito debe iniciar sesion. Desea iniciar sesión? </p>
-							<p:commandButton value="Si" action="/templates/login.xhtml" ajax="false" styleClass="ui-confirmdialog-yes"/>
-							
-							<div style="display:flex;text-align: left;">
-						    	<p:commandButton value="No" oncomplete="PF('goInitSesion').hide" styleClass="ui-confirmdialog-no ui-button-flat" ajax="false" />
-							</div>						   
-						   
-					</p:dialog>
-			      
-    			
-					<div class="bottom-shopp-container">
-						<div class="bottom-shopp">
-							
-							<p:commandButton  type="submit" action="templates/tienda.xhtml"  onclick="mostrar()" value="Ver todo"/>
-							
+					<h:form id="form-login">
+					
+						<p:dialog header="Iniciar sesión" modal="true" widgetVar="goInitSesion" minHeight="40" width="350" showEffect="fade">
+							    <p class="p-m-0"> Para agregar al carrito debe iniciar sesion. Desea iniciar sesión? </p>
+								<p:commandButton value="Si" action="/templates/login.xhtml" ajax="false" styleClass="ui-confirmdialog-yes"/>
+								
+								<div style="display:flex;text-align: left;">
+							    	<p:commandButton value="No" oncomplete="PF('goInitSesion').hide" styleClass="ui-confirmdialog-no ui-button-flat" ajax="false" />
+								</div>						   
+							   
+						</p:dialog>
+					
+						<div class="bottom-shopp-container">
+							<div class="bottom-shopp">
+								
+								<p:commandButton  type="submit" action="templates/tienda.xhtml"  onclick="mostrar()" value="Ver todo"/>
+								
+							</div>
+	
 						</div>
-
-					</div>
-
-   			</h:form>
+					
+					</h:form>
+					
+	
 		  <p:divider/>		
         </div>
 		

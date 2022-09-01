@@ -17,9 +17,9 @@ public class Setup {
 	public Setup() {
 		super();
 	
-		this.user = "atkzsgcztqzogi";
-		this.password = "7284927f5839ecdcc9aae2d0ba65f47d20e88c864cf4a5c8ac12af56f0164e30";
-		this.stringConexion = "jdbc:postgresql://ec2-54-227-248-71.compute-1.amazonaws.com:5432/d8oiuvucpcg0qs";
+		this.user = "postgres";
+		this.password = "1234";
+		this.stringConexion = "jdbc:postgresql://localhost:5432/donnareggina";
 		
 		try {
 			Class.forName("org.postgresql.Driver");

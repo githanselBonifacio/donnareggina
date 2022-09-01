@@ -46,7 +46,6 @@ public class CrudView implements Serializable {
     public void init() {
     	this.selectedProduct = new Product() ;
 		this.products = serviceProduct.getProductsCrudEdit();
-
 	
     }
     public void reset() {
@@ -121,26 +120,27 @@ public class CrudView implements Serializable {
 	
 	
 	public void openNew() {
+		System.out.println("nuevo");
         this.selectedProduct = new Product();
         this.selectedProduct.setCategory("Ropa exterior");
+   
     }
 
     public void saveProduct() {
     	try {
+    		
     		Query query = new Query();
 		    	String codeBaseProduct = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9);
-		     
-		    	
-		        if (this.selectedProduct.getIdProducto()==null) {
-		        	
+		    	System.out.println(this.selectedProduct);
+		        if (this.selectedProduct.getCode().isBlank()) {
+		        
 		        	this.selectedProduct.setIdProducto(this.selectedProduct.getNombre()+"-"+this.selectedProduct.getColor()+"-"+this.selectedProduct.getSize()+"-R");
 		        	this.selectedProduct.setCode(codeBaseProduct+"-"+this.selectedProduct.getSize()+"-"+this.selectedProduct.getColor());
 		        	this.selectedProduct.setInventoryStatus(InventoryStatus.INSTOCK.getText());
-		        	
-		        	
+
 		        	if(this.uploadedData.getImages().isEmpty()) {
-		        		System.out.println("imagen vacia: "+this.uploadedData.getImages().isEmpty());
-		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No cargo imagen, el produto no fue guardado"));
+		        	
+		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error","No cargo imagen, el produto no fue guardado"));
 		        	}else {
 		        		this.selectedProduct.setImage(uploadedData.getImages().get(0));
 		        	
@@ -153,24 +153,24 @@ public class CrudView implements Serializable {
 
 		        	}
 		        
-		        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Creado"));
+		        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Transacción exitosa!!","Producto Creado"));
 		        	}
 	
-		        }
-		        else {
+		        }else {
+		        	
 		        	if(query.updateProduct(this.selectedProduct.getCode(), 
 		        			                    this.selectedProduct.getNombre(),
 		        			                     this.selectedProduct.getDescription(),
 		        			                      this.selectedProduct.getPrice(),
 		        			                         this.selectedProduct.getQuantity())) {
 		        		
-		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto actualizado"));
+		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Transacción exitosa!!","Producto actualizado"));
 		        	}else {
-		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El producto no pudo ser actualizado"));
+		        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Transacción fallida!!","El producto no pudo ser actualizado"));
 		        	}
 		        	
-		            
 		        }
+		        this.selectedProduct = new Product();
 		        
 		        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 		        PrimeFaces.current().executeScript("window.location.reload()");
@@ -179,7 +179,7 @@ public class CrudView implements Serializable {
 		        
 				
     	}catch (Exception e) {
-    		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Fallo al crear o actualizar produto"));
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error al al crear o actualizar","el producto no se creó o actualizó"));
 			System.out.println("Fallo al crear o actualizar produto");
 			System.out.println(e);
 		}
@@ -187,20 +187,17 @@ public class CrudView implements Serializable {
     }
 
     public void deleteProduct() {
-    	System.out.println(this.selectedProduct);
     	Query query = new Query();
-    	
+ 
     	if(query.deleteProductById(this.selectedProduct.getCode())) {
-    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Eliminado"));
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Eliminado",""));
     	}else {
-    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto No pudo ser eliminado"));
+    		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("No es posible eliminar producto: ","esta en carrito de un cliente"));
     	}
-    	 FacesContext facesContext = FacesContext.getCurrentInstance();
-		 NavigationHandler nav = facesContext.getApplication().getNavigationHandler();
-		 nav.handleNavigation(facesContext, null, "adminProducts");
-
-        
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    	this.selectedProduct=null;
+    	PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+    	PrimeFaces.current().executeScript("window.location.reload()");
+    
     }
 
     public String getDeleteButtonMessage() {
@@ -218,12 +215,11 @@ public class CrudView implements Serializable {
     }
 
     public void deleteSelectedProducts() {
-    	//System.out.println("se elimino producto");
-    	//System.out.println(this.selectedProducts.toString());
-        //this.products.removeAll(this.selectedProducts);
-        //this.selectedProducts = null;
+   
+        this.products.removeAll(this.selectedProducts);
+        this.selectedProducts = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se eliminaron los productos"));
-        PrimeFaces.current().ajax().update("form:form:messages", "form:form:dt-products");
+        PrimeFaces.current().ajax().update("form:messages", "form:card:dt-products");
         PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
         FacesContext facesContext = FacesContext.getCurrentInstance();
 		NavigationHandler nav = facesContext.getApplication().getNavigationHandler();

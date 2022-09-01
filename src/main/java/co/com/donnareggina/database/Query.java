@@ -12,10 +12,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.donnareggina.model.Addresser;
 import co.com.donnareggina.model.Customer;
 import co.com.donnareggina.model.DataUser;
 import co.com.donnareggina.model.Product;
 import co.com.donnareggina.model.ProductViewData;
+import co.com.donnareggina.model.Sale;
 import co.com.donnareggina.model.User;
 
 public class Query extends Setup{
@@ -353,7 +355,7 @@ public class Query extends Setup{
 
             dml.add(user);
           }
-
+              
         	  return dml;
 		}
        catch (SQLException ex) {
@@ -362,6 +364,7 @@ public class Query extends Setup{
        }
 	}
 	public ArrayList <DataUser> getDataUser(int idUser) {
+		
 		ArrayList<DataUser> dml = new ArrayList<DataUser>();
 		
 		try {
@@ -372,15 +375,15 @@ public class Query extends Setup{
        
             while (resultSet.next())
           {  
-            	DataUser user = new DataUser();
+              DataUser user = new DataUser();
         	  user.setIdentificationType(resultSet.getString(2));
         	  user.setIdentificationNumber(resultSet.getString(3));
         	  user.setFirsName(resultSet.getString(4));
         	  user.setSecondName(resultSet.getString(5));
         	  user.setLastName(resultSet.getString(6));
         	  user.setSecondLastName(resultSet.getString(7));
-        	  user.setDateBirth(resultSet.getDate(8));
-        	  user.setEmail(resultSet.getString(9));
+        	  user.setDateBirth(resultSet.getDate(9));
+        	  user.setEmail(resultSet.getString(10));
             dml.add(user);
           }
 
@@ -415,6 +418,32 @@ public class Query extends Setup{
 		}
 	}
 	
+	public  boolean createCustomer(int idUser, Customer customer) {
+		try {
+			PreparedStatement pstm = connection.prepareStatement(
+					"INSERT INTO customer (iduser, identificaciontype,identificationnumber,firsname,secondname,lastname,secondlastname,phone,email)"+
+			        " VALUES (?,?,?,?,?,?,?,?,?)"
+				);
+			pstm.setInt   (1, idUser);
+			pstm.setString(2,customer.getIdetificationType() );
+			pstm.setString(3, customer.getIdentificationNumber());
+			pstm.setString(4, customer.getFirsName());
+			pstm.setString(5, customer.getSecondName());
+			pstm.setString(6, customer.getLastName());
+			pstm.setString(7, customer.getSecondLastname());
+			pstm.setString(8 ,customer.getPhone());
+			pstm.setString(9, customer.getEmail());
+			pstm.execute();
+            pstm.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
 	public List <Customer> getAllcustomer() {
 		List <Customer> listCustomer=new ArrayList<Customer>();
 		listIdeCustomer = new ArrayList<Integer>();
@@ -442,7 +471,8 @@ public class Query extends Setup{
 										 resultSetCustomer.getString(5), 
 										 resultSetCustomer.getString(6), 
 										 resultSetCustomer.getString(7), 
-										 resultSetCustomer.getString(9)
+										 resultSetCustomer.getString(9),
+										 resultSetCustomer.getString(10)
 										 )
 							
 							);
@@ -498,6 +528,204 @@ public class Query extends Setup{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new ArrayList<Product>();
+		}
+	}
+	public boolean addAddressCustomer(String idCustomer,Addresser addresser) {
+		try {
+			PreparedStatement pstm = connection.prepareStatement(
+					"INSERT INTO addresscustomer (iddustomer, mainavenuetype,mainavenuenumber,secondavenuenumber,homenumber,department,municipality,additionaldescription)"+
+			        " VALUES (?,?,?,?,?,?,?,?)"
+				);
+			pstm.setString(1, idCustomer);
+			pstm.setString(2, addresser.getMainAvenueType());
+			pstm.setString(3, addresser.getMainAvenueNumber());
+			pstm.setString(4, addresser.getSecondAvenueNumber());
+			pstm.setString(5, addresser.getHomeNumber());
+			pstm.setString(6, addresser.getDepartment());
+			pstm.setString(7, addresser.getMinicipally());
+			pstm.setString(8 ,addresser.getAdditonalDescription());
+			pstm.execute();
+            pstm.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	public boolean addSale(String billNumber,Sale sale) {
+		try {
+			PreparedStatement pstm = connection.prepareStatement(
+					"INSERT INTO sales (billnumber,idcustomer,datesale,idproduct,quantity,ispaid,status)"+
+			        " VALUES (?,?,?,?,?,?,?)"
+				);
+			pstm.setString (1, billNumber);
+			pstm.setString (2, sale.getIdCustomer());
+			pstm.setDate   (3, sale.getDateSale());
+			pstm.setString (4, sale.getIdProduct());
+			pstm.setInt    (5, sale.getQuantity());
+			pstm.setBoolean(6, sale.isPaid());
+			pstm.setString( 7, sale.getStatus());
+			
+			pstm.execute();
+            pstm.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	public List <Sale> buildSalesTable(ResultSet resultSet){
+		List <Sale> listSales = new ArrayList<>();
+		try {
+			while (resultSet.next()){
+				
+
+				listSales.add(
+							new Sale(
+									resultSet.getString (1),
+									resultSet.getString (2),
+									resultSet.getDate   (3),
+									resultSet.getBoolean(4),
+									resultSet.getString (5)
+
+									)
+							
+							) ;
+				
+			 }
+		} catch (SQLException e) {
+			System.out.println("Error al consitruir sale");
+			e.printStackTrace();
+		}
+		return listSales;
+	}
+	
+	public List <Sale> getAllSalesTable() {
+		List <Sale> listSales=null;
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT DISTINCT billnumber, idcustomer, datesale, ispaid,status from sales" );
+			
+			listSales =buildSalesTable(resultSet);
+			
+			
+			return listSales;
+	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new ArrayList <Sale>();
+		}
+	}
+	public List<Product> getProductSale(String billNumber){
+		
+		try {
+			
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+					"SELECT "
+					+" product.idproduct,product.code,product.nombre,product.description,"
+					+"product.price,product.category,product.color,product.talla,sales.quantity,product.inventorystatus,"
+					+"product.rating,product.solicitadasventa,product.image "
+					+"from product "
+					+"INNER JOIN sales ON sales.idproduct = product.code "
+					+"WHERE sales.billnumber = '"+billNumber+"'");
+			
+		
+			List<Product> listProduct = buildProduct(resultSet);
+					
+			return listProduct;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new ArrayList<Product>();
+		}
+	
+	}
+	public Customer getCustomerSale(String billNumber) {
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+					"SELECT customer.* "
+					+ "from customer "
+					+ "INNER JOIN sales ON sales.idcustomer = customer.identificationnumber "
+					+ "WHERE sales.billnumber = '"+billNumber+"'"
+					+ "LIMIT 1");
+
+			Customer customer = buildCustomer(resultSet);
+					
+			return customer;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new Customer();
+		}
+	}
+	public Customer buildCustomer(ResultSet resultSet){
+		
+		try {
+			while (resultSet.next()){
+				
+					return	new Customer(
+									resultSet.getString (1),
+									resultSet.getString (2),
+									resultSet.getString (3),
+									resultSet.getString (4),
+									resultSet.getString (5),
+									resultSet.getString (6),
+									resultSet.getString (7),
+									resultSet.getString (9),
+									resultSet.getString (10)
+									);
+				
+			 }
+		} catch (SQLException e) {
+			System.out.println("Error al consitruir customer");
+			e.printStackTrace();
+		}
+		return new Customer();
+	}
+	public Addresser buildAddresser(ResultSet resultSet) {
+		Addresser addresser = null;
+		try {
+			while (resultSet.next()){
+				
+				addresser =	new Addresser(
+									resultSet.getString (2),
+									resultSet.getString (3),
+									resultSet.getString (4),
+									resultSet.getString (5),
+									resultSet.getString (6),
+									resultSet.getString (7),
+									resultSet.getString (8),
+									resultSet.getString (9)
+									);
+				
+			 }
+			return addresser;
+		} catch (SQLException e) {
+			System.out.println("Error al consitruir addresser");
+			e.printStackTrace();
+			return new Addresser();
+		}
+
+	}
+	public Addresser getAddresserSale(String billNumber) {
+		
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+					"Select addresscustomer.*"+
+					" from addresscustomer"+
+					" INNER JOIN customer ON customer.identificationnumber = addresscustomer.iddustomer"+
+					" INNER JOIN sales ON sales.idcustomer = customer.identificationnumber"+
+					" WHERE sales.billnumber = '"+billNumber+"'"+
+					" LIMIT 1;");
+		
+			return buildAddresser(resultSet);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new Addresser();
 		}
 	}
 } 

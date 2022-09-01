@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
 :root{
     --dark-primary-color    :#3DB2FF;
-    --default-primary-color : #00BCD4; 
+    --default-primary-color : rgb(0, 128, 192); 
     --light-primary-color   : #B2EBF2; 
     --text-primary-color    : #FFFFFF; 
     --accent-color          : #F0A500; 

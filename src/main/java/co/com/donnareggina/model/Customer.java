@@ -12,9 +12,10 @@ public class Customer implements Serializable {
 	private String secondName;
 	private String lastName;
 	private String secondLastname;
+	private String phone;
 	private String email;
 	
-	
+	public Customer() {};
 	
 	public Customer(String idUser, String idetificationType, String identificationNumber, String firsName,
 			String secondName, String lastName, String secondLastname, String email) {
@@ -27,6 +28,31 @@ public class Customer implements Serializable {
 		this.lastName = lastName;
 		this.secondLastname = secondLastname;
 		this.email = email;
+	}
+	public Customer(String idUser, String idetificationType, String identificationNumber, String firsName,
+			String secondName, String lastName, String secondLastname, String phone ,String email) {
+		super();
+		this.idUser = idUser;
+		this.idetificationType = idetificationType;
+		this.identificationNumber = identificationNumber;
+		this.firsName = firsName;
+		this.secondName = secondName;
+		this.lastName = lastName;
+		this.secondLastname = secondLastname;
+		this.email = email;
+		this.phone = phone;
+	}
+
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 

@@ -13,6 +13,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<link rel="stylesheet" type="text/css" href="../css/Admin.css" media="screen"/>
 		<link rel="stylesheet" type="text/css" href="../css/mainIndex.css" media="screen"/>
+		<link rel="stylesheet" type="text/css" href="../css/Admin.css" media="screen"/>
 		<script type="text/javascript" src="../js/loadContent.js"/>
 		<title>Administración de productos</title>
 		<style>
@@ -43,9 +44,9 @@
 		<h:form id="form" enctype="multipart/form-data">
 					 
 					 <p:growl id="messages" showDetail="true"/>
-					 <div class="card crud-demo">
+					
 					 		
-					 			<p:toolbar >
+					 			<p:toolbar style="padding: 0em 2em 0em 2em;">
 					 						<p:toolbarGroup align="left">
 									                <p:linkButton outcome="adminProductBack"  icon="pi pi-arrow-left"/>
 									        </p:toolbarGroup>
@@ -77,7 +78,7 @@
 					 		
 					 				 <p:dataTable id="dt-products" widgetVar="dtProducts" var="product" value="#{crudView.products}"
 							              reflow="true" styleClass="products-table"
-							              selection="#{crudView.selectedProducts}" rowKey="#{product.code}" paginator="true"
+							              selection="#{crudView.selectedProducts}" rowKey="#{product.code}" paginator="true" style="padding: 0em 2em 0em 2em;"
 							              rows="10" rowSelectMode="add" paginatorPosition="bottom" >
 											                     
 											   <f:facet name="header">
@@ -103,11 +104,11 @@
 												
 												
 												
-												<p:column headerText="Referencia"  filterBy="#{product.code}">
+												<p:column headerText="Referencia"  filterBy="#{product.code}" filterMatchMode="contains">
 									                <h:outputText value="#{product.code}"/>
 									            </p:column>
 									            
-									            <p:column headerText="Nombre" sortBy="#{product.nombre}" filterBy="#{product.nombre}">
+									            <p:column headerText="Nombre" sortBy="#{product.nombre}" filterBy="#{product.nombre}" filterMatchMode="contains">
 									                <h:outputText value="#{product.nombre}"/>
 									            </p:column>
 												
@@ -122,7 +123,7 @@
 									                </h:outputText>
 									            </p:column>
 									            
-									            <p:column headerText="Categoría" sortBy="#{product.category}" filterBy="#{product.category}">
+									            <p:column headerText="Categoría" sortBy="#{product.category}" filterBy="#{product.category}" filterMatchMode="contains">
 									                <h:outputText value="#{product.category}"/>
 									            </p:column>
 									            
@@ -131,13 +132,13 @@
 									            </p:column>
 									            
 									            <p:column headerText="Stock" sortBy="#{product.inventoryStatus}"
-									                      filterBy="#{product.inventoryStatus}">
+									                      filterBy="#{product.inventoryStatus}" filterMatchMode="contains">
 									                <h:outputText styleClass="product-badge status-#{product.inventoryStatus}"
 									                              value="#{product.inventoryStatus}"/>
 									            </p:column>
 									            
 									            <p:column headerText="Color" sortBy="#{product.color}"
-									                      filterBy="#{product.color}">
+									                      filterBy="#{product.color}" filterMatchMode="contains">
 									                <h:outputText styleClass="product-badge status-#{product.color}"
 									                              value="#{product.color}"/>
 									            </p:column>
@@ -184,7 +185,7 @@
 
 
 					            <p:outputPanel id="manage-product-content" class="ui-fluid">
-					            		
+					    
 					            		<div class="p-field">
 					      					<p:outputLabel for="nombre">Nombre</p:outputLabel>
 					                        <p:inputText id="nombre" value="#{crudView.selectedProduct.nombre}"  style="margin-bottom:1em" />
@@ -228,18 +229,23 @@
 														                    <f:selectItem itemLabel="Rosa"     itemValue="Rosa"/>
 														                    <f:selectItem itemLabel="Amarillo" itemValue="Amarillo"/>
 														                    <f:selectItem itemLabel="Café"     itemValue="Café"/>
+														                    <f:selectItem itemLabel="Naranja"     itemValue="Café"/>
 														                   
 														                </p:selectOneMenu>
-														   <div class="p-field">
-									                        	<p:outputLabel for="codeUpdate" rendered="#{not empty crudView.selectedProduct.code}">Referencia</p:outputLabel>
-									                        	<p:inputText id="codeUpdate" value="#{crudView.selectedProduct.code}"  style="margin-bottom:1em" rendered="#{not empty crudView.selectedProduct.code}"/>
-									                        	
-									                    </div>           
-														 <div class="text-size-view" id="text-size#{crudView.selectedProduct.size}">
-														  
-														 	 <p:tag styleClass="p-mr-2" icon="pi pi-tag" value="#{crudView.selectedProduct.size}" style="font-size:1.2em"/>
-															
-														</div>
+														                
+													<div style="display: none;">
+														    <div class="p-field">
+										      					<p:outputLabel for="codeUpdate" >Referencia</p:outputLabel>
+										                        <p:inputText id="codeUpdate" value="#{crudView.selectedProduct.code}"  style="margin-bottom:1em"/>
+										             		</div>              
+															          
+															 <div class="text-size-view" id="text-size#{crudView.selectedProduct.size}">
+															  
+															 	 <p:tag styleClass="p-mr-2" icon="pi pi-tag" value="#{crudView.selectedProduct.size}" style="font-size:1.2em"/>
+																
+															</div>
+													</div>                
+															 
 	
 												   </div>  
 					                    	   
@@ -312,30 +318,35 @@
 					     
 					                               
 					                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()" actionListener="#{crudView.reset}"
-					                                 class="ui-button-secondary" process="manage-product-content @this"/>
+					                                 class="ui-button-secondary" process="manage-product-content @this" ajax="false"/>
 					            </f:facet>
 					            
 					    </p:dialog> 
 					    
-					 <p:dialog header="Eliminar producto" showEffect="fade" modal="true"  width="20%"
-					                  widgetVar="deleteProductDialog"  position="center">
+					 <p:dialog header="¿Desea eliminar este producto?"  showEffect="fade" modal="true"  width="20%"
+					                  widgetVar="deleteProductDialog"  position="center" responsive="true">
 					                  
 					      <p:outputPanel id="confirm-delete" class="ui-fluid">
+					      		<div style="display: none;">
 					      		
-					      		<div class="p-field">
-					      					<p:outputLabel for="nombreref">Nombre</p:outputLabel>
-					                        <p:inputText id="nombreref" value="#{crudView.selectedProduct.nombre}"  style="margin-bottom:1em" />
-					             </div>
-					           
-					              <div class="p-field">
-					                         <p:outputLabel for="nameDeleted">Referencia</p:outputLabel>
-					                        <p:inputText id="nameDeleted" value="#{crudView.selectedProduct.code}"  style="margin-bottom:1em"/>
-					             </div>
+					      		     <div class="p-field" >
+						      		
+						      					<p:outputLabel for="nombreref">Nombre</p:outputLabel>
+						                        <p:inputText id="nombreref" value="#{crudView.selectedProduct.nombre}"  style="margin-bottom:1em" />
+						             </div>
+						           
+						              <div class="p-field">
+						                         <p:outputLabel for="nameDeleted">Referencia</p:outputLabel>
+						                        <p:inputText id="nameDeleted" value="#{crudView.selectedProduct.code}"  style="margin-bottom:1em"/>
+						             </div>
+					      		
+					      		</div>
+						      		
 					            
-					            <div>
-						            <p:commandButton value="SI" icon="pi pi-check" actionListener="#{crudView.deleteProduct}" style="margin: 0 1em 1em 0;"
+					            <div style="padding: 0 20% 0 20%;display: flex;">
+						            <p:commandButton value="SI" icon="pi pi-check" actionListener="#{crudView.deleteProduct}" style="margin: 0 10% 0 0;"
 						                             oncomplete="PF('deleteProductDialog').hide()"   
-						                             update="confirm-delete" process="confirm-delete @this" ajax="false"/>
+						                             update="confirm-delete" process="confirm-delete @this"/>
 						                             
 						            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
 						                             onclick="PF('deleteProductDialog').hide()"/>       
@@ -346,12 +357,8 @@
 					      	     
 					               
 					   </p:dialog>
-					   
-					   
-						 </div>
-				
+	
 				</h:form>
-			
 	
 	</h:body>
 	

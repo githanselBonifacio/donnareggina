@@ -74,17 +74,17 @@
       <version>2.2.17</version>
     </dependency>
 	
-	<dependency>
-      <groupId>org.primefaces</groupId>
-      <artifactId>primefaces</artifactId>
-     <version>11.0.0</version>
-   </dependency>
+  <dependency>
+    <groupId>org.primefaces</groupId>
+    <artifactId>primefaces</artifactId>
+    <version>11.0.0</version>
+  </dependency>
+
 	
-	<dependency>
-	    <groupId>org.postgresql</groupId>
-	    <artifactId>postgresql</artifactId>
-	    <version>42.3.3</version>
-	</dependency>
+  <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+  </dependency>
 
 
   </dependencies>
@@ -112,9 +112,10 @@
         </plugin>
         
         <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-war-plugin</artifactId>
+		  <version>3.2.2</version>
+		</plugin>
         
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -127,4 +128,13 @@
       </plugins>
     </pluginManagement>
   </build>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.postgresql</groupId>
+  			<artifactId>postgresql</artifactId>
+  			<version>42.3.3</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>

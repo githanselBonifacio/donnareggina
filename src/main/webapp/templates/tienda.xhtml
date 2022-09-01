@@ -140,7 +140,7 @@
 		         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 				        <div class="p-text-center" style="padding: 2em 2em 2em 2em">
 				        	<br/>
-				            <i class="pi pi-spin pi-spinner loading-icon" id="loading-icon" aria-hidden="true"></i>
+				            <i class="pi pi-spin pi-spinner loading-icon" id="loading-icon" aria-hidden="true" ></i>
 			                <br/>
 				        </div>
 		         </p:dialog>
@@ -158,7 +158,7 @@
             				<p:toolbarGroup>
              
        							<span class="ui-input-icon-left" >
-        						 	<i class="pi pi-search"/>
+        						 	<em class="pi pi-search"/>
         							<p:inputText placeholder="Buscar..." icon="pi pi-fw pi-search" style="font-size:1.2em;"/>
     							</span>
         			
@@ -168,11 +168,11 @@
 		
 								 <p:growl id="growl" life="2000"/>
 								 
-								 <p:linkButton   value="Inicio"         outcome="tienda-index"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
-    							 <p:linkButton   value="Tienda"         outcome="tienda.xhtml"    style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>
-   								 <p:linkButton   value="Acerca de"      outcome="acercaDe.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-    							 <p:linkButton   value="Contacto"       outcome="contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-                               	 <p:linkButton   value="Administración" outcome="admin.xhtml" rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />	
+								 <p:linkButton outcome="tienda-index"   value="Inicio"           style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
+    							 <p:linkButton outcome="tienda.xhtml"   value="Tienda"           style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>
+   								 <p:linkButton outcome="acercaDe.xhtml" value="Acerca de"        style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+    							 <p:linkButton outcome="contacto.xhtml" value="Contacto"         style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+                               	 <p:linkButton outcome="admin.xhtml"    value="Administración"   rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />	
 							
 								
 							</p:toolbarGroup>
@@ -180,7 +180,7 @@
             				<p:toolbarGroup align="right">
             				
             					<p:linkButton  outcome="login" value="Iniciar sesión" icon="pi pi-user" rendered="#{!loginController.user.isSession}" style="font-size:0.8em;background: none;color: black;border: 0;"/>
-            					<p:commandButton  value="#{loginController.user.dataUser.toString()}" type="button" icon="pi pi-user" rendered="#{loginController.user.isSession}" onclick="PF('log-out').show()" 
+            					<p:commandButton  value="#{loginController.user.dataUser}" type="button" icon="pi pi-user" rendered="#{loginController.user.isSession}" onclick="PF('log-out').show()" 
             					                        style="background: none;color: black;border: 0;text-decoration: none;"/>
             					<p:autoUpdate/>
             					<p:tag value="#{loginController.user.rol}" rendered="#{loginController.user.rol == 'ADMIN'}"/>
@@ -264,7 +264,7 @@
 					         </div>
 					         
 					          <div style="display: block;">
-					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout}"  onclick="PF('log-out').hide()}"
 					      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
 
 					         </div>
@@ -355,7 +355,7 @@
 								                <div class="product-item-store">
 								                    <div class="product-item-top">
 								                        <div>
-								                            <i class="pi pi-tag product-category-icon"/>
+								                            <em class="pi pi-tag product-category-icon"/>
 								                            <span class="product-category">#{product.category}</span>
 								                        </div>
 								                        <div id="stock">
@@ -421,8 +421,8 @@
 									    			 				<div class="ui-fluid">
 									    			 					 
 									    			 					 <div class="p-mb-3">
-														                      <p:galleria value="#{manageCart.imageOption}" var="image" numVisible="#{manageCart.imageOption.size()}" responsiveOptions="#{manageCart.responsiveOptionsImage}"
-																		                showThumbnails="false" showIndicators="#{manageCart.imageOption.size()>1}" changeItemOnIndicatorHover="true" showIndicatorsOnItem="false"  style="max-width: 640px">
+														                      <p:galleria value="#{manageCart.imageOption}" var="image" numVisible="#{manageCart.getSizeOptionImagen()}" responsiveOptions="#{manageCart.responsiveOptionsImage}"
+																		                showThumbnails="false" showIndicators="#{manageCart.isSizeMajorOne()}" changeItemOnIndicatorHover="true" showIndicatorsOnItem="false"  style="max-width: 640px">
 																		        <p:graphicImage value="#{image}"  style="width: 62%; display: block;" stream="false" />
 																		    </p:galleria>
 														                 </div>
@@ -482,7 +482,6 @@
 													            <div class="p-field p-col-12 p-md-4">
 													            
 													            	<p:rating value="#{manageCart.selectedProduct.rating}" readonly="true" style="padding-bottom: 0.8em;"/>
-													            
 													            
 													            </div>
 													            

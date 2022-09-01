@@ -44,11 +44,11 @@
 		
 								 <p:growl id="growl" life="2000"/>
 								 
-								 <p:linkButton  type="submit"  value="Inicio"         outcome="admin-Index"    style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
-    							 <p:linkButton  type="submit"  value="Tienda"         outcome="tienda.xhtml"   style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-   								 <p:linkButton  type="submit"  value="Acerca de"      outcome="acercaDe.xhtml" style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />
-    							 <p:linkButton  type="submit"  value="Contacto"       outcome="contacto.xhtml"  style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
-                               	 <p:linkButton  type="submit"  value="Administración" outcome="admin.xhtml" rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>	
+								 <p:linkButton  outcome="admin-Index"    value="Inicio"             style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"  />  
+    							 <p:linkButton  outcome="tienda.xhtml"   value="Tienda"             style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+   								 <p:linkButton  outcome="acercaDe.xhtml" value="Acerca de"          style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;" />
+    							 <p:linkButton  outcome="contacto.xhtml" value="Contacto"           style="font-size:0.8em;background: none;color: black;border: 0;text-decoration: none;"/>
+                               	 <p:linkButton  outcome="admin.xhtml"    value="Administración"     rendered="#{loginController.user.rol=='ADMIN'}" style="font-size:0.8em;background: none;color: orange;border: 0;text-decoration: none;"/>	
 							
 								
 							</p:toolbarGroup>
@@ -84,7 +84,7 @@
 					         </div>
 					         
 					          <div style="display: block;">
-					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide(),#{navigation.home()}"
+					      	    <p:commandButton  value="Cerrar Sesion" action="#{loginController.logout()}"  onclick="PF('log-out').hide()"
 					      	         style="border-radius:0px;background-color:#164081;border-color:#164081;padding:0 1.5em 0 1.5em;"/>
 
 					         </div>

@@ -2,7 +2,6 @@ package co.com.donnareggina.model;
 
 import java.io.Serializable;
 
-import java.util.List;
 
 public class Product implements Serializable{
 	
@@ -26,7 +25,7 @@ public class Product implements Serializable{
     private int rating;
     private int solicitadasVenta;
     private byte [] image;
-    private String  nombreRef;
+   
     
     
     @Override
@@ -59,14 +58,6 @@ public class Product implements Serializable{
 		this.image = image;
 	}
 
-    
-	public String getNombreRef() {
-		return nombreRef;
-	}
-
-	public void setNombreRef(String nombreRef) {
-		this.nombreRef = nombreRef;
-	}
 
 	public String getIdProducto() {
 		return idProducto;
