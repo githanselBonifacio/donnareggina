@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16610316971020" configfile="/donnareggina/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="770" y="1330" id="pf16610318778691" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf16610318778692" inlinks="pf16610318778693 pf16610318778694 pf16610318778695 pf16610318778696 pf166103203665925" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/login.xhtml" x="554" y="1330" id="pf16610318778697" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf166103203665925" inlinks="pf16610318778692 pf16610318778699" path="/templates/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/adminProducts.xhtml" x="338" y="178" id="pf166103187787010" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf166103187787011" path="/templates/adminProducts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/admin.xhtml" x="554" y="562" id="pf166103187787012" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf16610318778693" inlinks="pf166103187787011 pf166103187787013 pf166103187787014" path="/templates/admin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/adminUser.xhtml" x="338" y="562" id="pf166103187787015" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf166103187787013" path="/templates/adminUser.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/adminSales.xhtml" x="338" y="946" id="pf166103187787016" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf166103187787014" path="/templates/adminSales.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/register.xhtml" x="122" y="1330" id="pf166103187787017" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf166103187787018" path="/templates/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/registerData.xhtml" x="338" y="1330" id="pf166103187787019" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf16610318778699" inlinks="pf166103187787018" path="/templates/registerData.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/contacto.xhtml" x="554" y="946" id="pf166103187787020" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf16610318778694" path="/templates/contacto.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/acercaDe.xhtml" x="554" y="1714" id="pf166103187787021" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf16610318778695" path="/templates/acercaDe.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/tienda.xhtml" x="554" y="2098" id="pf166103187787022" referenceLink="//@navigationRule.10/@fromViewId|" outlinks="pf16610318778696" path="/templates/tienda.xhtml"/>
+  <links id="pf16610318778692" target="pf16610318778697" source="pf16610318778691" outcome="login"/>
+  <links id="pf166103187787011" target="pf166103187787012" source="pf166103187787010" outcome="adminProductBack"/>
+  <links id="pf166103187787013" target="pf166103187787012" source="pf166103187787015" outcome="adminUserBack"/>
+  <links id="pf166103187787014" target="pf166103187787012" source="pf166103187787016" outcome="adminSalesBack"/>
+  <links id="pf16610318778693" target="pf16610318778691" source="pf166103187787012" outcome="admin-Index"/>
+  <links id="pf166103187787018" target="pf166103187787019" source="pf166103187787017" outcome="registerData"/>
+  <links id="pf16610318778699" target="pf16610318778697" source="pf166103187787019" outcome="register-login"/>
+  <links id="pf16610318778694" target="pf16610318778691" source="pf166103187787020" outcome="contacto-index"/>
+  <links id="pf16610318778695" target="pf16610318778691" source="pf166103187787021" outcome="acercaDe-index"/>
+  <links id="pf16610318778696" target="pf16610318778691" source="pf166103187787022" outcome="tienda-index"/>
+  <links id="pf166103203665925" target="pf16610318778691" source="pf16610318778697" outcome="home"/>
+</pageflow:Pageflow>
